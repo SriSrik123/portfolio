@@ -3,10 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { ExternalLink, Github, Filter } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function ProjectsSection() {
   const [filter, setFilter] = useState("all");
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
 
   const projects = [
     {
@@ -65,17 +67,16 @@ export default function ProjectsSection() {
   const filteredProjects =
     filter === "all" ? projects : projects.filter((p) => p.category === filter);
 
-  // Gallery-style animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.08, delayChildren: 0.08 },
     },
   };
   const item = {
-    hidden: { opacity: 0, y: 30, scale: 0.98 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } },
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55 } },
   };
 
   return (
@@ -122,82 +123,92 @@ export default function ProjectsSection() {
           ))}
         </motion.div>
 
-        {/* Gallery Grid with staggered items and subtle hover tilt */}
+        {/* Horizontal Scrollable Gallery with snap-x */}
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              variants={item}
-              whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
-              transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          <ScrollArea className="w-full">
+            <div
+              ref={scrollerRef}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
             >
-              <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
-                <div className="aspect-video overflow-hidden rounded-t-lg">
-                  <motion.img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ duration: 0.35 }}
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary">
-                    {project.title}
-                  </CardTitle>
-                  <p className="text-muted-foreground">{project.description}</p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{project.technologies.length - 4} more
-                      </Badge>
-                    )}
-                  </div>
+              {filteredProjects.map((project, index) => (
+                <motion.div
+                  key={project.title}
+                  variants={item}
+                  whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
+                  transition={{ type: "spring", stiffness: 220, damping: 18 }}
+                  className="min-w-[85%] sm:min-w-[60%] lg:min-w-[38%] snap-center"
+                >
+                  <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <motion.img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.06 }}
+                        transition={{ duration: 0.35 }}
+                      />
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-xl text-primary">
+                        {project.title}
+                      </CardTitle>
+                      <p className="text-muted-foreground">
+                        {project.description}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.slice(0, 4).map((tech) => (
+                          <Badge key={tech} variant="secondary" className="text-xs">
+                            {tech}
+                          </Badge>
+                        ))}
+                        {project.technologies.length > 4 && (
+                          <Badge variant="secondary" className="text-xs">
+                            +{project.technologies.length - 4} more
+                          </Badge>
+                        )}
+                      </div>
 
-                  <div className="flex gap-3 pt-4">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground cursor-pointer"
-                      asChild
-                    >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-4 w-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer"
-                      asChild
-                    >
-                      <a href={project.live} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Live Demo
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                      <div className="flex gap-3 pt-4">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground cursor-pointer"
+                          asChild
+                        >
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Github className="h-4 w-4 mr-2" />
+                            Code
+                          </a>
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer"
+                          asChild
+                        >
+                          <a href={project.live} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Live Demo
+                          </a>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </motion.div>
       </div>
     </section>

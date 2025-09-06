@@ -19,19 +19,33 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           <div className="w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary">
             <img
-              src="https://harmless-tapir-303.convex.cloud/api/storage/be3666df-549b-44ad-a3f5-092313ca0ab5"
-              alt="Srinarayan Srikanth"
+              src="https://harmless-tapir-303.convex.cloud/api/storage/58e9d760-f5df-42e8-b14e-007548dc4cd5"
+              alt="Profile photo"
               className="w-full h-full object-cover"
             />
           </div>
         </motion.div>
 
-        {/* Name and Title */}
+        {/* Name and Title with animated backdrop */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative"
         >
+          {/* animated gradient "video-like" backdrop */}
+          <motion.div
+            aria-hidden
+            className="absolute inset-x-0 -inset-y-2 -z-10 mx-auto h-24 w-3/4 blur-2xl rounded-full"
+            style={{
+              background:
+                "linear-gradient(90deg, color-mix(in oklch, var(--primary) 65%, black), color-mix(in oklch, var(--ring) 65%, black))",
+              opacity: 0.25,
+            }}
+            animate={{ backgroundPositionX: ["0%", "100%", "0%"] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          />
+
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-glow">
             Hi, I'm <span className="text-primary">Srinarayan Srikanth</span>
           </h1>
