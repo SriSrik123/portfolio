@@ -8,6 +8,7 @@ import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import Prism from "@/components/Prism";
 
 export default function Landing() {
   const [activeSection, setActiveSection] = useState("hero");
@@ -51,6 +52,21 @@ export default function Landing() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-background text-foreground dark"
     >
+      {/* Rotating Prism background */}
+      <div className="fixed inset-0 -z-10 opacity-[0.5] pointer-events-none">
+        <Prism
+          animationType="rotate"
+          timeScale={0.55}
+          height={3.8}
+          baseWidth={6.2}
+          scale={3.4}
+          hueShift={-8}
+          colorFrequency={1.7}
+          noise={0.85}
+          glow={1.6}
+        />
+      </div>
+
       <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
       
       <main>
