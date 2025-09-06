@@ -154,7 +154,7 @@ export default function ProjectsSection() {
           <ScrollArea className="w-full">
             <div
               ref={scrollerRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
+              className="w-max flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
             >
               {filteredProjects.map((project, index) => (
                 <motion.div
@@ -162,7 +162,7 @@ export default function ProjectsSection() {
                   variants={item}
                   whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
                   transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                  className="min-w-[85%] sm:min-w-[60%] lg:min-w-[38%] snap-center"
+                  className="w-[85vw] sm:w-[60vw] lg:w-[38vw] snap-start"
                 >
                   <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
                     <div className="aspect-video overflow-hidden rounded-t-lg">
