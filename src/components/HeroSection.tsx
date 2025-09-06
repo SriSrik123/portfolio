@@ -19,7 +19,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           <div className="w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary">
             <img
-              src="https://harmless-tapir-303.convex.cloud/api/storage/2d3fcd26-61ab-4f56-b87f-3d82e5281ff9"
+              src="https://harmless-tapir-303.convex.cloud/api/storage/be3666df-549b-44ad-a3f5-092313ca0ab5"
               alt="Srinarayan Srikanth"
               className="w-full h-full object-cover"
             />
@@ -86,7 +86,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           className="flex justify-center space-x-6 mb-12"
         >
           <motion.a
-            href="https://github.com/Srinarayan-Srikanth"
+            href="https://github.com/SriSrik123"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2, color: "var(--primary)" }}
@@ -95,7 +95,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             <Github className="h-8 w-8" />
           </motion.a>
           <motion.a
-            href="https://linkedin.com/in/srinarayan-srikanth"
+            href="https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2, color: "var(--ring)" }}

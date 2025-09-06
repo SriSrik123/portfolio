@@ -12,28 +12,28 @@ export default function ProjectsSection() {
     {
       title: "Coached - AI Fitness Tracking App",
       description: "Full-stack AI app delivering sport-specific workout plans, analytics, and social features.",
-      image: "https://harmless-tapir-303.convex.cloud/api/storage/4c4bd0bb-7bb3-4940-978a-827ba8f3f771",
+      image: "https://harmless-tapir-303.convex.cloud/api/storage/d142f0a0-a333-46f0-a855-4ce7236acb6c",
       technologies: ["React 18.3.1", "TypeScript 5.5.3", "Vite 5.4.1", "Tailwind CSS 3.4.11", "Radix UI", "shadcn/ui", "Capacitor 7.4.1", "Supabase", "Google Gemini API"],
       category: "fullstack",
-      github: "https://github.com/Srinarayan-Srikanth/coached",
+      github: "https://github.com/SriSrik123/coached",
       live: "#"
     },
     {
       title: "ASlearn - AI Sign Language Platform",
       description: "Built real-time sign recognition app with YOLO v5 and PyTorch for gesture detection. Flask backend deployed on AWS for scalability.",
-      image: "https://harmless-tapir-303.convex.cloud/api/storage/f7c97d2a-7a25-4351-b995-bc159524f6cf",
+      image: "https://harmless-tapir-303.convex.cloud/api/storage/e26b31e8-92fd-453c-9a79-109e5f2f9747",
       technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLO v5"],
       category: "ai",
-      github: "https://github.com/Srinarayan-Srikanth/aslearn",
+      github: "https://github.com/SriSrik123/aslearn",
       live: "#"
     },
     {
       title: "SwiftFillAI",
       description: "Chrome extension using AI for web assistance and automating form fill to streamline online tasks.",
-      image: "https://harmless-tapir-303.convex.cloud/api/storage/fabe3147-fbc6-4ac1-a238-890383d9b5ed",
+      image: "https://harmless-tapir-303.convex.cloud/api/storage/9921eba9-2788-417a-ab4c-8c8d7f44c9cc",
       technologies: ["Google Gemini", "JavaScript"],
       category: "ai",
-      github: "https://github.com/Srinarayan-Srikanth/swiftfillai",
+      github: "https://github.com/SriSrik123/swiftfillai",
       live: "#"
     }
   ];

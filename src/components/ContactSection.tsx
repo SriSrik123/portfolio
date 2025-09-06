@@ -25,19 +25,19 @@ export default function ContactSection() {
       icon: Linkedin,
       label: "LinkedIn",
       value: "Srinarayan Srikanth",
-      href: "https://linkedin.com/in/srinarayan-srikanth"
+      href: "https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/"
     },
     {
       icon: Github,
       label: "GitHub",
-      value: "Srinarayan-Srikanth",
-      href: "https://github.com/Srinarayan-Srikanth"
+      value: "SriSrik123",
+      href: "https://github.com/SriSrik123"
     },
     {
       icon: MapPin,
       label: "HackerRank",
-      value: "hellgpr2006",
-      href: "https://hackerrank.com/hellgpr2006"
+      value: "hellosri2006f",
+      href: "https://www.hackerrank.com/profile/hellosri2006f"
     }
   ];
 

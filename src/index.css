@@ -51,18 +51,18 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.08 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.7 0.3 150); /* #00ff88 neon green */
+  --primary: oklch(0.7 0.22 150); /* #00ff88 neon green */
   --primary-foreground: oklch(0.06 0 0);
   --secondary: oklch(0.15 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.12 0 0);
   --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.7 0.35 320); /* #ff0080 neon pink */
+  --accent: oklch(0.7 0.26 320); /* #ff0080 neon pink */
   --accent-foreground: oklch(0.06 0 0);
   --destructive: oklch(0.6 0.3 25);
   --border: oklch(0.2 0 0);
   --input: oklch(0.15 0 0);
-  --ring: oklch(0.7 0.3 220); /* #0088ff neon blue */
+  --ring: oklch(0.7 0.24 220); /* #0088ff neon blue */
   --chart-1: oklch(0.7 0.3 150);
   --chart-2: oklch(0.7 0.35 320);
   --chart-3: oklch(0.7 0.3 220);
@@ -75,7 +75,7 @@
   --sidebar-accent: oklch(0.15 0 0);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.7 0.3 220);
+  --sidebar-ring: oklch(0.7 0.24 220);
 }
 
 .dark {
@@ -85,18 +85,18 @@
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.08 0 0);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.7 0.3 150);
+  --primary: oklch(0.7 0.22 150);
   --primary-foreground: oklch(0.06 0 0);
   --secondary: oklch(0.15 0 0);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.12 0 0);
   --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.7 0.35 320);
+  --accent: oklch(0.7 0.26 320);
   --accent-foreground: oklch(0.06 0 0);
   --destructive: oklch(0.6 0.3 25);
   --border: oklch(0.2 0 0);
   --input: oklch(0.15 0 0);
-  --ring: oklch(0.7 0.3 220);
+  --ring: oklch(0.7 0.24 220);
   --chart-1: oklch(0.7 0.3 150);
   --chart-2: oklch(0.7 0.35 320);
   --chart-3: oklch(0.7 0.3 220);
@@ -109,7 +109,7 @@
   --sidebar-accent: oklch(0.15 0 0);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.7 0.3 220);
+  --sidebar-ring: oklch(0.7 0.24 220);
 }
 
 @layer base {
@@ -127,18 +127,30 @@
 
 /* Custom neon glow effects */
 .neon-glow {
-  box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  /* softer glow */
+  box-shadow: 0 0 6px currentColor, 0 0 12px currentColor;
 }
 
 .neon-border {
-  border: 1px solid currentColor;
-  box-shadow: 0 0 5px currentColor;
+  border: 1px solid color-mix(in oklch, currentColor 60%, oklch(0.5 0 0));
+  box-shadow: 0 0 3px color-mix(in oklch, currentColor 55%, oklch(0.5 0 0));
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, oklch(0.06 0 0) 0%, oklch(0.08 0 0) 50%, oklch(0.06 0 0) 100%);
+  background: radial-gradient(1200px 600px at 20% 20%, oklch(0.08 0 0), transparent 60%),
+              radial-gradient(900px 500px at 80% 30%, color-mix(in oklch, var(--ring) 12%, oklch(0.06 0 0)), transparent 60%),
+              linear-gradient(135deg, oklch(0.06 0 0) 0%, oklch(0.08 0 0) 50%, oklch(0.06 0 0) 100%);
+  background-size: 200% 200%;
+  animation: gradientMove 22s ease-in-out infinite;
 }
 
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Softer text glow */
 .text-glow {
-  text-shadow: 0 0 10px currentColor;
+  text-shadow: 0 0 6px color-mix(in oklch, currentColor 60%, oklch(0.5 0 0));
 }

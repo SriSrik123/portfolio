@@ -3,8 +3,8 @@ import { Github, Linkedin, Mail, Heart } from "lucide-react";
 
 export default function Footer() {
   const socialLinks = [
-    { icon: Github, href: "https://github.com/Srinarayan-Srikanth", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/in/srinarayan-srikanth", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/SriSrik123", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/", label: "LinkedIn" },
     { icon: Mail, href: "mailto:srinarayan.srikanth@gmail.com", label: "Email" },
   ];
 
