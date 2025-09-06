@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ChevronDown, Download, Github, Linkedin } from "lucide-react";
+import Prism from "@/components/Prism";
 
 interface HeroSectionProps {
   onSectionClick: (section: string) => void;
@@ -17,19 +18,22 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          {/* Video animation behind profile image */}
+          {/* WebGL blue animation behind profile image */}
           <div className="relative mx-auto w-56 h-56">
-            <motion.video
-              autoPlay
-              muted
-              loop
-              playsInline
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.85 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="absolute inset-0 w-full h-full object-cover rounded-full blur-sm"
-              src="https://cdn.coverr.co/videos/coverr-blue-abstract-shapes-8580/1080p.mp4"
-            />
+            {/* Replace prior motion.video with interactive OGL animation */}
+            <div className="absolute inset-0 rounded-full overflow-hidden blur-sm">
+              <Prism
+                animationType="rotate"
+                timeScale={0.5}
+                height={3.5}
+                baseWidth={5.5}
+                scale={3.6}
+                hueShift={0}
+                colorFrequency={1}
+                noise={0.5}
+                glow={1}
+              />
+            </div>
             <div className="relative w-48 h-48 top-4 left-4 rounded-full overflow-hidden neon-border border-primary ring-2 ring-primary/30">
               <img
                 src="/images/profile.jpg"
