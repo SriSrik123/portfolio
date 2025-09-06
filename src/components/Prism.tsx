@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Minimal OGL-based shader animation that reacts to cursor and time.
 // Keeps types loose to avoid build/type issues.
@@ -28,6 +28,7 @@ export default function Prism(props: {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const destroyRef = useRef<(() => void) | null>(null);
+  const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current!;
@@ -157,65 +158,70 @@ export default function Prism(props: {
     }
 
     async function init() {
-      const mod = await import("ogl");
-      ogl = mod as any;
+      try {
+        const mod = await import("ogl");
+        ogl = mod as any;
 
-      renderer = new ogl.Renderer({ dpr: Math.min(2, window.devicePixelRatio || 1), canvas });
-      gl = renderer.gl;
-      gl?.clearColor(0, 0, 0, 0);
+        renderer = new ogl.Renderer({ dpr: Math.min(2, window.devicePixelRatio || 1), canvas });
+        gl = renderer.gl;
+        gl?.clearColor(0, 0, 0, 0);
 
-      const triangleGeo = new ogl.Triangle(gl);
-      triangle = triangleGeo;
+        const triangleGeo = new ogl.Triangle(gl);
+        triangle = triangleGeo;
 
-      program = new ogl.Program(gl, {
-        vertex,
-        fragment,
-        uniforms: {
-          u_time: { value: 0 },
-          u_resolution: { value: [canvas.width, canvas.height] },
-          u_mouse: { value: [0.5, 0.5] },
-          u_hueShift: { value: hueShift },
-          u_colorFreq: { value: colorFrequency },
-          u_noise: { value: noise },
-          u_glow: { value: glow },
-          u_height: { value: height },
-          u_baseWidth: { value: baseWidth },
-          u_scale: { value: scale },
-          u_mode: { value: animationType === "rotate" ? 0 : 1 },
-        },
-      });
+        program = new ogl.Program(gl, {
+          vertex,
+          fragment,
+          uniforms: {
+            u_time: { value: 0 },
+            u_resolution: { value: [canvas.width, canvas.height] },
+            u_mouse: { value: [0.5, 0.5] },
+            u_hueShift: { value: hueShift },
+            u_colorFreq: { value: colorFrequency },
+            u_noise: { value: noise },
+            u_glow: { value: glow },
+            u_height: { value: height },
+            u_baseWidth: { value: baseWidth },
+            u_scale: { value: scale },
+            u_mode: { value: animationType === "rotate" ? 0 : 1 },
+          },
+        });
 
-      mesh = new ogl.Mesh(gl, { geometry: triangle, program });
+        mesh = new ogl.Mesh(gl, { geometry: triangle, program });
 
-      function resize() {
-        const { clientWidth, clientHeight } = container;
-        renderer.setSize(clientWidth, clientHeight);
-        program.uniforms.u_resolution.value = [gl!.canvas.width, gl!.canvas.height];
+        function resize() {
+          const { clientWidth, clientHeight } = container;
+          renderer.setSize(clientWidth, clientHeight);
+          program.uniforms.u_resolution.value = [gl!.canvas.width, gl!.canvas.height];
+        }
+        resize();
+
+        window.addEventListener("resize", resize);
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+        const loop = () => {
+          const t = (performance.now() - start) / 1000 * timeScale;
+          program.uniforms.u_time.value = t;
+          program.uniforms.u_mouse.value = [mouse.x, mouse.y];
+
+          renderer.render({ scene: mesh });
+          raf = requestAnimationFrame(loop);
+        };
+        loop();
+
+        destroyRef.current = () => {
+          cancelAnimationFrame(raf);
+          window.removeEventListener("resize", resize);
+          window.removeEventListener("mousemove", onMouseMove);
+          try {
+            gl && (gl as any).getExtension && (gl as any).getExtension("WEBGL_lose_context")?.loseContext();
+          } catch {}
+        };
+      } catch (err) {
+        // If OGL fails to load (e.g., dependency not installed), enable fallback
+        setFallback(true);
+        destroyRef.current = () => {};
       }
-      resize();
-
-      window.addEventListener("resize", resize);
-      window.addEventListener("mousemove", onMouseMove, { passive: true });
-
-      const loop = () => {
-        const t = (performance.now() - start) / 1000 * timeScale;
-        program.uniforms.u_time.value = t;
-        program.uniforms.u_mouse.value = [mouse.x, mouse.y];
-
-        renderer.render({ scene: mesh });
-        raf = requestAnimationFrame(loop);
-      };
-      loop();
-
-      destroyRef.current = () => {
-        cancelAnimationFrame(raf);
-        window.removeEventListener("resize", resize);
-        window.removeEventListener("mousemove", onMouseMove);
-        // Best-effort cleanup
-        try {
-          gl && gl.getExtension && gl.getExtension("WEBGL_lose_context")?.loseContext();
-        } catch {}
-      };
     }
 
     init();
@@ -227,7 +233,21 @@ export default function Prism(props: {
 
   return (
     <div ref={containerRef} style={{ position: "absolute", inset: 0 }}>
-      <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+      {/* Fallback animated gradient if WebGL fails */}
+      {fallback ? (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            background:
+              "radial-gradient(800px 500px at 20% 30%, color-mix(in oklch, var(--primary) 18%, transparent), transparent 60%), radial-gradient(700px 450px at 80% 40%, color-mix(in oklch, var(--ring) 18%, transparent), transparent 60%), linear-gradient(135deg, oklch(0.08 0 0), oklch(0.1 0 0), oklch(0.08 0 0))",
+            backgroundSize: "200% 200%",
+            animation: "prismFallbackMove 18s ease-in-out infinite",
+          }}
+        />
+      ) : (
+        <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+      )}
     </div>
   );
 }

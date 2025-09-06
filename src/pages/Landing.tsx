@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -12,6 +12,19 @@ import Prism from "@/components/Prism";
 
 export default function Landing() {
   const [activeSection, setActiveSection] = useState("hero");
+
+  // Add scroll progress hooks
+  const { scrollYProgress } = useScroll();
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]); // background prism scale
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, -120]); // subtle parallax up
+
+  // Section parallax and scale
+  const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 1.02]);
+  const aboutY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const expY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const projY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const skillsY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const contactY = useTransform(scrollYProgress, [0, 1], [0, -120]);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
@@ -52,8 +65,11 @@ export default function Landing() {
       transition={{ duration: 0.5 }}
       className="min-h-screen bg-background text-foreground dark"
     >
-      {/* Rotating Prism background */}
-      <div className="fixed inset-0 -z-10 opacity-[0.5] pointer-events-none">
+      {/* Rotating Prism background with scroll-reactive scale & parallax */}
+      <motion.div
+        className="fixed inset-0 -z-10 opacity-[0.7] pointer-events-none"
+        style={{ scale: bgScale, y: bgY }}
+      >
         <Prism
           animationType="rotate"
           timeScale={0.55}
@@ -63,19 +79,30 @@ export default function Landing() {
           hueShift={-8}
           colorFrequency={1.7}
           noise={0.85}
-          glow={1.6}
+          glow={2.2}
         />
-      </div>
+      </motion.div>
 
       <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
       
       <main>
+        {/* Each section gets subtle scroll-tied movement/scale */}
         <HeroSection onSectionClick={scrollToSection} />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ContactSection />
+        <motion.div style={{ y: aboutY, scale: sectionScale }}>
+          <AboutSection />
+        </motion.div>
+        <motion.div style={{ y: expY, scale: sectionScale }}>
+          <ExperienceSection />
+        </motion.div>
+        <motion.div style={{ y: projY, scale: sectionScale }}>
+          <ProjectsSection />
+        </motion.div>
+        <motion.div style={{ y: skillsY, scale: sectionScale }}>
+          <SkillsSection />
+        </motion.div>
+        <motion.div style={{ y: contactY, scale: sectionScale }}>
+          <ContactSection />
+        </motion.div>
       </main>
       
       <Footer />
