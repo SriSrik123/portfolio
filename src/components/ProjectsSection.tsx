@@ -168,7 +168,7 @@ export default function ProjectsSection() {
                   className="w-[60vw] sm:w-[40vw] lg:w-[22vw] snap-start"
                 >
                   <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
-                    <div className="overflow-hidden rounded-t-lg h-28 sm:h-32 lg:h-36">
+                    <div className="overflow-hidden rounded-t-lg h-36 sm:h-44 lg:h-52">
                       <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.25 }} className="w-full h-full">
                         <FallbackImage src={project.image} alt={project.title} />
                       </motion.div>

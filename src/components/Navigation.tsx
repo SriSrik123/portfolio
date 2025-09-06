@@ -74,13 +74,15 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, color: "var(--primary)" }}
-                  className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                  className={`text-muted-foreground hover:text-primary transition-colors cursor-pointer ${
+                    link.label === "HackerRank" ? "p-1 rounded-md bg-white" : ""
+                  }`}
                 >
                   {link.label === "HackerRank" ? (
                     <img
                       src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
                       alt="HackerRank"
-                      className="h-5 w-5 object-contain"
+                      className="h-4 w-auto object-contain"
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"
@@ -139,13 +141,15 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, color: "var(--primary)" }}
-                  className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                  className={`text-muted-foreground hover:text-primary transition-colors cursor-pointer ${
+                    link.label === "HackerRank" ? "p-1 rounded-md bg-white" : ""
+                  }`}
                 >
                   {link.label === "HackerRank" ? (
                     <img
                       src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
                       alt="HackerRank"
-                      className="h-6 w-6 object-contain"
+                      className="h-5 w-auto object-contain"
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"

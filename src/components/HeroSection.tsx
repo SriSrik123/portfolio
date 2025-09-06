@@ -155,12 +155,12 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
-            className="text-muted-foreground hover:text-accent transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center rounded-md bg-white p-2 transition-colors cursor-pointer"
           >
             <img
               src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
               alt="HackerRank"
-              className="h-8 w-8 object-contain"
+              className="h-6 w-auto object-contain"
               loading="lazy"
               decoding="async"
               referrerPolicy="no-referrer"
