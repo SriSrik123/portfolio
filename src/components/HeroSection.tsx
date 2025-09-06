@@ -33,17 +33,31 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="relative"
         >
-          {/* animated gradient "video-like" backdrop */}
+          {/* layered 'video-like' blur orbs behind the name */}
           <motion.div
             aria-hidden
-            className="absolute inset-x-0 -inset-y-2 -z-10 mx-auto h-24 w-3/4 blur-2xl rounded-full"
+            className="absolute inset-x-0 -inset-y-6 -z-10 mx-auto w-[85%] h-28 rounded-[999px] blur-2xl"
             style={{
               background:
                 "linear-gradient(90deg, color-mix(in oklch, var(--primary) 65%, black), color-mix(in oklch, var(--ring) 65%, black))",
-              opacity: 0.25,
+              opacity: 0.22,
             }}
             animate={{ backgroundPositionX: ["0%", "100%", "0%"] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.div
+            aria-hidden
+            className="absolute -z-10 left-1/4 top-[-10px] w-24 h-24 rounded-full blur-[30px]"
+            style={{ background: "oklch(0.72 0.14 240 / 0.55)" }}
+            animate={{ x: [0, 40, -10, 0], y: [0, -10, 10, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            aria-hidden
+            className="absolute -z-10 right-1/4 top-[-20px] w-28 h-28 rounded-full blur-[34px]"
+            style={{ background: "oklch(0.74 0.12 235 / 0.5)" }}
+            animate={{ x: [0, -30, 15, 0], y: [0, 10, -8, 0] }}
+            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
           />
 
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-glow">

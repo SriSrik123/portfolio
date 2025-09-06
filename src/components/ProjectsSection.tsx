@@ -16,7 +16,7 @@ export default function ProjectsSection() {
       description:
         "AI-driven product recommendation system using 20k+ products for personalized shopping.",
       image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/bab9b79a-3d7b-46f3-b357-fa488aa12242",
+        "https://opengraph.githubassets.com/1/SriSrik123/AIProductRecommender",
       technologies: ["Python", "Pandas", "Flask"],
       category: "ai",
       github: "https://github.com/SriSrik123/AIProductRecommender",
@@ -26,8 +26,7 @@ export default function ProjectsSection() {
       title: "SwiftFillAI",
       description:
         "Chrome extension using AI for web assistance and automated form filling.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/9921eba9-2788-417a-ab4c-8c8d7f44c9cc",
+      image: "https://opengraph.githubassets.com/1/SriSrik123/SwiftFillAI",
       technologies: ["Google Gemini", "JavaScript"],
       category: "ai",
       github: "https://github.com/SriSrik123/SwiftFillAI",
@@ -37,8 +36,7 @@ export default function ProjectsSection() {
       title: "ASlearn - AI Sign Language Platform",
       description:
         "Real-time sign recognition with YOLO v5 and PyTorch; Flask backend on AWS.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/e26b31e8-92fd-453c-9a79-109e5f2f9747",
+      image: "https://opengraph.githubassets.com/1/SriSrik123/ASlearn",
       technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLO v5"],
       category: "ai",
       github: "https://github.com/SriSrik123/ASlearn",
@@ -48,8 +46,7 @@ export default function ProjectsSection() {
       title: "Workout Tracker",
       description:
         "Sport-focused workout tracking with analytics and mobile-first experience.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/d142f0a0-a333-46f0-a855-4ce7236acb6c",
+      image: "https://opengraph.githubassets.com/1/SriSrik123/Workout-Tracker",
       technologies: ["React", "TypeScript", "Tailwind", "Capacitor"],
       category: "fullstack",
       github: "https://github.com/SriSrik123/Workout-Tracker",
