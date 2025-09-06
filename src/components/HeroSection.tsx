@@ -17,12 +17,26 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          <div className="w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary">
-            <img
-              src="/images/profile.jpg"
-              alt="Profile photo"
-              className="w-full h-full object-cover"
+          {/* Video animation behind profile image */}
+          <div className="relative mx-auto w-56 h-56">
+            <motion.video
+              autoPlay
+              muted
+              loop
+              playsInline
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.85 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="absolute inset-0 w-full h-full object-cover rounded-full blur-sm"
+              src="https://cdn.coverr.co/videos/coverr-blue-abstract-shapes-8580/1080p.mp4"
             />
+            <div className="relative w-48 h-48 top-4 left-4 rounded-full overflow-hidden neon-border border-primary ring-2 ring-primary/30">
+              <img
+                src="/images/profile.jpg"
+                alt="Profile photo"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </motion.div>
 

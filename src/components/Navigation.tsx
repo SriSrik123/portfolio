@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X, Award } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 interface NavigationProps {
@@ -20,12 +20,8 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
     { id: "contact", label: "Contact" },
   ];
 
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/SriSrik123", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/", label: "LinkedIn" },
-    { icon: Award, href: "http://hackerrank.com/profile/hellosri2006", label: "HackerRank" },
-    { icon: Mail, href: "mailto:srinarayan.srikanth@gmail.com", label: "Email" },
-  ];
+  // Remove social links from the navbar as requested
+  const socialLinks: Array<never> = [];
 
   return (
     <>
@@ -65,34 +61,7 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
               ))}
             </div>
 
-            {/* Desktop Social Links */}
-            <div className="hidden md:flex items-center space-x-4">
-              {socialLinks.map((link) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, color: "var(--primary)" }}
-                  className={`text-muted-foreground hover:text-primary transition-colors cursor-pointer ${
-                    link.label === "HackerRank" ? "p-1 rounded-md bg-white" : ""
-                  }`}
-                >
-                  {link.label === "HackerRank" ? (
-                    <img
-                      src="/images/hackerrank.png"
-                      alt="HackerRank"
-                      className="h-4 w-auto object-contain"
-                      loading="lazy"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <link.icon className="h-5 w-5" />
-                  )}
-                </motion.a>
-              ))}
-            </div>
+            {/* Desktop Social Links removed */}
 
             {/* Mobile Menu Button */}
             <Button
@@ -133,33 +102,7 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                 {item.label}
               </Button>
             ))}
-            <div className="flex justify-center space-x-6 pt-4 border-t border-border">
-              {socialLinks.map((link) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, color: "var(--primary)" }}
-                  className={`text-muted-foreground hover:text-primary transition-colors cursor-pointer ${
-                    link.label === "HackerRank" ? "p-1 rounded-md bg-white" : ""
-                  }`}
-                >
-                  {link.label === "HackerRank" ? (
-                    <img
-                      src="/images/hackerrank.png"
-                      alt="HackerRank"
-                      className="h-6 w-auto object-contain"
-                      loading="lazy"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <link.icon className="h-6 w-6" />
-                  )}
-                </motion.a>
-              ))}
-            </div>
+            {/* Mobile Social Links removed */}
           </div>
         </motion.div>
       )}
