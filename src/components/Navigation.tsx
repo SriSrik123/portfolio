@@ -80,7 +80,7 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                 >
                   {link.label === "HackerRank" ? (
                     <img
-                      src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+                      src="/images/hackerrank.png"
                       alt="HackerRank"
                       className="h-4 w-auto object-contain"
                       loading="lazy"
@@ -147,9 +147,9 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                 >
                   {link.label === "HackerRank" ? (
                     <img
-                      src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+                      src="/images/hackerrank.png"
                       alt="HackerRank"
-                      className="h-5 w-auto object-contain"
+                      className="h-6 w-auto object-contain"
                       loading="lazy"
                       decoding="async"
                       referrerPolicy="no-referrer"

@@ -19,7 +19,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           <div className="w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary">
             <img
-              src="https://harmless-tapir-303.convex.cloud/api/storage/58e9d760-f5df-42e8-b14e-007548dc4cd5"
+              src="/images/profile.jpg"
               alt="Profile photo"
               className="w-full h-full object-cover"
             />
@@ -158,7 +158,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             className="inline-flex items-center justify-center rounded-md bg-white p-2 transition-colors cursor-pointer"
           >
             <img
-              src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+              src="/images/hackerrank.png"
               alt="HackerRank"
               className="h-6 w-auto object-contain"
               loading="lazy"

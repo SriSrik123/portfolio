@@ -39,8 +39,7 @@ export default function ProjectsSection() {
       title: "Coached - AI Fitness Tracking App",
       description:
         "Full-stack AI app delivering sport-specific workout plans, analytics, and social features.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/80a84346-89cf-41e2-b079-12d925e3cf3d",
+      image: "/images/coached.png",
       technologies: [
         "React 18.3.1",
         "TypeScript 5.5.3",
@@ -60,8 +59,7 @@ export default function ProjectsSection() {
       title: "ASlearn - AI Sign Language Platform",
       description:
         "Built real-time sign recognition app with YOLOv5 and PyTorch for gesture detection. Flask backend deployed on AWS for scalability.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/b0d97b20-705d-42a7-b95c-bbd996862d90",
+      image: "/images/aslearn.png",
       technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLOv5"],
       category: "ai",
       github: "https://github.com/SriSrik123/ASlearn",
@@ -71,8 +69,7 @@ export default function ProjectsSection() {
       title: "SwiftFillAI",
       description:
         "Chrome extension using AI for website assistance and automating form filling to streamline online tasks.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/a49f20da-229f-4933-b75d-31c62b55a69e",
+      image: "/images/swiftfillai.png",
       technologies: ["Google Gemini", "JavaScript"],
       category: "ai",
       github: "https://github.com/SriSrik123/SwiftFillAI",
@@ -82,8 +79,7 @@ export default function ProjectsSection() {
       title: "ShopPulse",
       description:
         "Developed an AI-driven product recommendation system leveraging a dataset of 20,000+ products to offer personalized shopping suggestions.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/af1536f6-e01c-42d6-b428-f3e601130ee4",
+      image: "/images/shoppulse.png",
       technologies: ["Python", "Pandas", "Flask"],
       category: "ai",
       github: "https://github.com/SriSrik123/AIProductRecommender",
