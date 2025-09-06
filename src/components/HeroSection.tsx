@@ -63,6 +63,24 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-glow">
             Hi, I'm <span className="text-primary">Srinarayan Srikanth</span>
           </h1>
+          {/* animated underline accent behind the name */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
+            className="h-1 w-48 md:w-64 mx-auto rounded-full overflow-hidden mb-6 origin-left"
+          >
+            <motion.div
+              animate={{ backgroundPositionX: ["0%", "200%", "0%"] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              className="h-full w-full"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--primary), var(--ring), var(--accent))",
+                backgroundSize: "200% 100%",
+              }}
+            />
+          </motion.div>
           <p className="text-xl md:text-2xl text-muted-foreground mb-2">
             Computer Science Student | AI/ML Enthusiast
           </p>
@@ -130,6 +148,23 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             className="text-muted-foreground hover:text-ring transition-colors cursor-pointer"
           >
             <Linkedin className="h-8 w-8" />
+          </motion.a>
+          {/* HackerRank link */}
+          <motion.a
+            href="http://hackerrank.com/profile/hellosri2006"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.2, color: "var(--accent)" }}
+            className="text-muted-foreground hover:text-accent transition-colors cursor-pointer"
+          >
+            {/* Using Award icon as HackerRank mark substitute */}
+            <svg
+              viewBox="0 0 24 24"
+              className="h-8 w-8 fill-current"
+              aria-label="HackerRank"
+            >
+              <path d="M12 1.5 3 6v12l9 4.5 9-4.5V6L12 1.5zm0 2.1L19.5 7v10L12 20.4 4.5 17V7L12 3.6zM9 8h6v2h-2v6h-2v-6H9V8z" />
+            </svg>
           </motion.a>
         </motion.div>
       </div>
