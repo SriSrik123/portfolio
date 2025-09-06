@@ -31,36 +31,35 @@ function FallbackImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function ProjectsSection() {
-  const [filter, setFilter] = useState("all");
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const projects = [
     {
-      title: "ShopPulse",
+      title: "Coached - AI Fitness Tracking App",
       description:
-        "AI-driven product recommendation system using 20k+ products for personalized shopping.",
+        "Full-stack AI app delivering sport-specific workout plans, analytics, and social features.",
       image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/af1536f6-e01c-42d6-b428-f3e601130ee4",
-      technologies: ["Python", "Pandas", "Flask"],
-      category: "ai",
-      github: "https://github.com/SriSrik123/AIProductRecommender",
-      live: "#",
-    },
-    {
-      title: "SwiftFillAI",
-      description:
-        "Chrome extension using AI for web assistance and automated form filling.",
-      image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/a49f20da-229f-4933-b75d-31c62b55a69e",
-      technologies: ["Google Gemini", "JavaScript"],
-      category: "ai",
-      github: "https://github.com/SriSrik123/SwiftFillAI",
+        "https://harmless-tapir-303.convex.cloud/api/storage/80a84346-89cf-41e2-b079-12d925e3cf3d",
+      technologies: [
+        "React 18.3.1",
+        "TypeScript 5.5.3",
+        "Vite 5.4.1",
+        "Tailwind CSS 3.4.11",
+        "Radix UI",
+        "shadcn/ui",
+        "Capacitor 7.4.1",
+        "Supabase",
+        "Google Gemini API",
+      ],
+      category: "fullstack",
+      github: "https://github.com/SriSrik123/Workout-Tracker",
       live: "#",
     },
     {
       title: "ASlearn - AI Sign Language Platform",
       description:
-        "Real-time sign recognition with YOLOv5 and PyTorch; Flask backend on AWS.",
+        "Built real-time sign recognition app with YOLOv5 and PyTorch for gesture detection. Flask backend deployed on AWS for scalability.",
       image:
         "https://harmless-tapir-303.convex.cloud/api/storage/b0d97b20-705d-42a7-b95c-bbd996862d90",
       technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLOv5"],
@@ -69,36 +68,28 @@ export default function ProjectsSection() {
       live: "#",
     },
     {
-      title: "Coached - AI Fitness Tracking App",
+      title: "SwiftFillAI",
       description:
-        "Full‑stack AI app delivering sport‑specific workout plans, analytics, and social features.",
+        "Chrome extension using AI for website assistance and automating form filling to streamline online tasks.",
       image:
-        "https://harmless-tapir-303.convex.cloud/api/storage/80a84346-89cf-41e2-b079-12d925e3cf3d",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Tailwind",
-        "Radix UI",
-        "shadcn/ui",
-        "Capacitor",
-        "Supabase",
-        "Google Gemini",
-      ],
-      category: "fullstack",
-      github: "https://github.com/SriSrik123/Workout-Tracker",
+        "https://harmless-tapir-303.convex.cloud/api/storage/a49f20da-229f-4933-b75d-31c62b55a69e",
+      technologies: ["Google Gemini", "JavaScript"],
+      category: "ai",
+      github: "https://github.com/SriSrik123/SwiftFillAI",
+      live: "#",
+    },
+    {
+      title: "ShopPulse",
+      description:
+        "Developed an AI-driven product recommendation system leveraging a dataset of 20,000+ products to offer personalized shopping suggestions.",
+      image:
+        "https://harmless-tapir-303.convex.cloud/api/storage/af1536f6-e01c-42d6-b428-f3e601130ee4",
+      technologies: ["Python", "Pandas", "Flask"],
+      category: "ai",
+      github: "https://github.com/SriSrik123/AIProductRecommender",
       live: "#",
     },
   ];
-
-  const categories = [
-    { id: "all", label: "All Projects" },
-    { id: "fullstack", label: "Full Stack" },
-    { id: "ai", label: "AI/ML" },
-    { id: "web", label: "Web Development" },
-  ];
-
-  const filteredProjects =
-    filter === "all" ? projects : projects.filter((p) => p.category === filter);
 
   const container = {
     hidden: { opacity: 0 },
@@ -110,6 +101,13 @@ export default function ProjectsSection() {
   const item = {
     hidden: { opacity: 0, y: 24, scale: 0.98 },
     show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55 } },
+  };
+
+  const scrollToProject = (index: number) => {
+    const el = itemRefs.current[index];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
   };
 
   return (
@@ -131,32 +129,24 @@ export default function ProjectsSection() {
           </p>
         </motion.div>
 
-        {/* Filter Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-4 mb-8"
         >
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={filter === category.id ? "default" : "outline"}
-              className={`cursor-pointer ${
-                filter === category.id
-                  ? "bg-primary text-primary-foreground"
-                  : "border-border hover:border-primary hover:text-primary"
-              }`}
-              onClick={() => setFilter(category.id)}
+          {projects.map((p, idx) => (
+            <button
+              key={p.title}
+              className="text-sm md:text-base text-muted-foreground hover:text-primary underline-offset-4 hover:underline cursor-pointer"
+              onClick={() => scrollToProject(idx)}
             >
-              <Filter className="h-4 w-4 mr-2" />
-              {category.label}
-            </Button>
+              {p.title}
+            </button>
           ))}
         </motion.div>
 
-        {/* Horizontal Scrollable Gallery with snap-x */}
         <motion.div
           variants={container}
           initial="hidden"
@@ -168,9 +158,10 @@ export default function ProjectsSection() {
               ref={scrollerRef}
               className="w-max flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
             >
-              {filteredProjects.map((project, index) => (
+              {projects.map((project, index) => (
                 <motion.div
                   key={project.title}
+                  ref={(el) => { itemRefs.current[index] = el; }}
                   variants={item}
                   whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
                   transition={{ type: "spring", stiffness: 220, damping: 18 }}
