@@ -154,17 +154,17 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             href="http://hackerrank.com/profile/hellosri2006"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2, color: "var(--accent)" }}
+            whileHover={{ scale: 1.2 }}
             className="text-muted-foreground hover:text-accent transition-colors cursor-pointer"
           >
-            {/* Using Award icon as HackerRank mark substitute */}
-            <svg
-              viewBox="0 0 24 24"
-              className="h-8 w-8 fill-current"
-              aria-label="HackerRank"
-            >
-              <path d="M12 1.5 3 6v12l9 4.5 9-4.5V6L12 1.5zm0 2.1L19.5 7v10L12 20.4 4.5 17V7L12 3.6zM9 8h6v2h-2v6h-2v-6H9V8z" />
-            </svg>
+            <img
+              src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+              alt="HackerRank"
+              className="h-8 w-8 object-contain"
+              loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
+            />
           </motion.a>
         </motion.div>
       </div>

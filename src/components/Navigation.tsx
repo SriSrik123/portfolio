@@ -65,7 +65,7 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
               ))}
             </div>
 
-            {/* Social Links */}
+            {/* Desktop Social Links */}
             <div className="hidden md:flex items-center space-x-4">
               {socialLinks.map((link) => (
                 <motion.a
@@ -76,7 +76,18 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                   whileHover={{ scale: 1.1, color: "var(--primary)" }}
                   className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                 >
-                  <link.icon className="h-5 w-5" />
+                  {link.label === "HackerRank" ? (
+                    <img
+                      src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+                      alt="HackerRank"
+                      className="h-5 w-5 object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <link.icon className="h-5 w-5" />
+                  )}
                 </motion.a>
               ))}
             </div>
@@ -130,7 +141,18 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                   whileHover={{ scale: 1.1, color: "var(--primary)" }}
                   className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                 >
-                  <link.icon className="h-6 w-6" />
+                  {link.label === "HackerRank" ? (
+                    <img
+                      src="https://harmless-tapir-303.convex.cloud/api/storage/bd29f612-67bb-4ad3-b394-ae9618eb5e6a"
+                      alt="HackerRank"
+                      className="h-6 w-6 object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <link.icon className="h-6 w-6" />
+                  )}
                 </motion.a>
               ))}
             </div>
