@@ -20,20 +20,20 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         >
           {/* WebGL blue animation behind profile image */}
           <div className="relative mx-auto w-64 h-64">
-            <div className="absolute inset-0 rounded-full overflow-hidden">
+            <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
               <Prism
                 animationType="rotate"
-                timeScale={0.6}
-                height={4.0}
-                baseWidth={6.0}
-                scale={3.2}
+                timeScale={0.7}
+                height={4.2}
+                baseWidth={6.2}
+                scale={3.4}
                 hueShift={-8}
-                colorFrequency={1.4}
-                noise={0.8}
-                glow={2.2}
+                colorFrequency={1.8}
+                noise={0.9}
+                glow={3.0}
               />
             </div>
-            <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary ring-2 ring-primary/30">
+            <div className="relative z-10 w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary ring-2 ring-primary/30">
               <img
                 src="/images/profile.jpg"
                 alt="Profile photo"

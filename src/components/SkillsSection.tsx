@@ -12,7 +12,7 @@ export default function SkillsSection() {
       skills: ["Python", "Java", "C++", "SQL", "JavaScript", "TypeScript", "HTML/CSS"]
     },
     {
-      title: "Frontend Libraries/Frameworks",
+      title: "Frontend Libraries/Frameworks", 
       icon: Code,
       color: "text-accent",
       skills: ["React", "Angular", "Tailwind CSS", "React Query", "React Hook Form", "Recharts", "Next-Themes", "Lucide React"]
@@ -67,6 +67,11 @@ export default function SkillsSection() {
 
   const hackerRankSkills = [
     "Java", "Python", "React.js", "CSS", "Frontend Developer", "Software Engineer", "Problem Solving"
+  ];
+
+  const combinedCertifications = [
+    ...certifications,
+    { title: "HackerRank", courses: hackerRankSkills }
   ];
 
   return (
@@ -129,7 +134,7 @@ export default function SkillsSection() {
         >
           <h3 className="text-2xl font-bold mb-8 text-center text-accent">Certifications</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {certifications.map((cert, index) => (
+            {combinedCertifications.map((cert, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -140,17 +145,17 @@ export default function SkillsSection() {
                 <Card className="bg-card/30 backdrop-blur-sm border-accent/30 hover:border-accent/60 transition-all duration-300">
                   <CardHeader>
                     <CardTitle className="text-lg text-accent">{cert.title}</CardTitle>
-                    {cert.issuer && (
-                      <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                    {("issuer" in cert && cert.issuer) && (
+                      <p className="text-sm text-muted-foreground">{(cert as any).issuer}</p>
                     )}
-                    {cert.period && (
-                      <p className="text-xs text-muted-foreground">{cert.period}</p>
+                    {("period" in cert && cert.period) && (
+                      <p className="text-xs text-muted-foreground">{(cert as any).period}</p>
                     )}
                   </CardHeader>
-                  {cert.courses && (
+                  {("courses" in cert && (cert as any).courses) && (
                     <CardContent>
                       <ul className="space-y-1">
-                        {cert.courses.map((course, i) => (
+                        {(cert as any).courses.map((course: string, i: number) => (
                           <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
                             <div className="w-1 h-1 bg-accent rounded-full"></div>
                             {course}
@@ -159,40 +164,15 @@ export default function SkillsSection() {
                       </ul>
                     </CardContent>
                   )}
-                  {cert.course && (
+                  {("course" in cert && (cert as any).course) && (
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">{cert.course}</p>
+                      <p className="text-sm text-muted-foreground">{(cert as any).course}</p>
                     </CardContent>
                   )}
                 </Card>
               </motion.div>
             ))}
           </div>
-        </motion.div>
-
-        {/* HackerRank Skills */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="text-2xl font-bold mb-8 text-center text-ring">HackerRank</h3>
-          <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
-            <CardContent className="p-8">
-              <div className="flex flex-wrap gap-3 justify-center">
-                {hackerRankSkills.map((skill) => (
-                  <Badge
-                    key={skill}
-                    variant="secondary"
-                    className="bg-transparent border border-ring/40 text-ring hover:bg-ring/10"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </motion.div>
       </div>
     </section>
