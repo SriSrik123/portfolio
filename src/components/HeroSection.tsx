@@ -9,7 +9,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onSectionClick }: HeroSectionProps) {
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative gradient-bg">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative gradient-bg pt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Profile Image */}
         <motion.div
@@ -166,13 +166,13 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           >
             <Linkedin className="h-8 w-8" />
           </motion.a>
-          {/* HackerRank link */}
+          {/* HackerRank link - remove box styling */}
           <motion.a
             href="http://hackerrank.com/profile/hellosri2006"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2 }}
-            className="inline-flex items-center justify-center rounded-md bg-white p-2 transition-colors cursor-pointer"
+            className="inline-flex items-center justify-center transition-colors cursor-pointer"
           >
             <img
               src="/images/hackerrank.png"

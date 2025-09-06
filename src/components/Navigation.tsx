@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface NavigationProps {
   activeSection: string;
@@ -10,6 +10,16 @@ interface NavigationProps {
 
 export default function Navigation({ activeSection, onSectionClick }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setAtTop(window.scrollY <= 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const navItems = [
     { id: "hero", label: "Home" },
@@ -20,7 +30,6 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
     { id: "contact", label: "Contact" },
   ];
 
-  // Remove social links from the navbar as requested
   const socialLinks: Array<never> = [];
 
   return (
@@ -30,7 +39,9 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+        className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border transition-all duration-300 ${
+          atTop ? "-translate-y-16 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">

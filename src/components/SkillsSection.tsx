@@ -184,7 +184,8 @@ export default function SkillsSection() {
                 {hackerRankSkills.map((skill) => (
                   <Badge
                     key={skill}
-                    className="bg-ring text-ring-foreground hover:bg-ring/90 neon-glow"
+                    variant="secondary"
+                    className="bg-transparent border border-ring/40 text-ring hover:bg-ring/10"
                   >
                     {skill}
                   </Badge>
