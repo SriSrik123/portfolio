@@ -23,7 +23,7 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
   const socialLinks = [
     { icon: Github, href: "https://github.com/SriSrik123", label: "GitHub" },
     { icon: Linkedin, href: "https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/", label: "LinkedIn" },
-    { icon: Award, href: "https://www.hackerrank.com/profile/hellosri2006f", label: "HackerRank" },
+    { icon: Award, href: "http://hackerrank.com/profile/hellosri2006", label: "HackerRank" },
     { icon: Mail, href: "mailto:srinarayan.srikanth@gmail.com", label: "Email" },
   ];
 
