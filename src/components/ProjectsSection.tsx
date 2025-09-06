@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Filter } from "lucide-react";
+import { Github } from "lucide-react";
 import { useState, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -165,10 +165,10 @@ export default function ProjectsSection() {
                   variants={item}
                   whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
                   transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                  className="w-[85vw] sm:w-[60vw] lg:w-[38vw] snap-start"
+                  className="w-[70vw] sm:w-[45vw] lg:w-[28vw] snap-start"
                 >
                   <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
-                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                    <div className="aspect-square overflow-hidden rounded-t-lg">
                       <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.35 }} className="w-full h-full">
                         <FallbackImage src={project.image} alt={project.title} />
                       </motion.div>
@@ -183,23 +183,18 @@ export default function ProjectsSection() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex flex-wrap gap-2">
-                        {project.technologies.slice(0, 4).map((tech) => (
+                        {project.technologies.map((tech) => (
                           <Badge key={tech} variant="secondary" className="text-xs">
                             {tech}
                           </Badge>
                         ))}
-                        {project.technologies.length > 4 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{project.technologies.length - 4} more
-                          </Badge>
-                        )}
                       </div>
 
-                      <div className="flex gap-3 pt-4">
+                      <div className="flex pt-4">
                         <Button
                           size="sm"
                           variant="outline"
-                          className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground cursor-pointer"
+                          className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground cursor-pointer"
                           asChild
                         >
                           <a
@@ -209,16 +204,6 @@ export default function ProjectsSection() {
                           >
                             <Github className="h-4 w-4 mr-2" />
                             Code
-                          </a>
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 cursor-pointer"
-                          asChild
-                        >
-                          <a href={project.live} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Live Demo
                           </a>
                         </Button>
                       </div>
