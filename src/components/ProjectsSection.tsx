@@ -36,11 +36,11 @@ export default function ProjectsSection() {
 
   const projects = [
     {
-      title: "AI Product Recommender",
+      title: "ShopPulse",
       description:
         "AI-driven product recommendation system using 20k+ products for personalized shopping.",
       image:
-        "https://opengraph.githubassets.com/1/SriSrik123/AIProductRecommender",
+        "https://harmless-tapir-303.convex.cloud/api/storage/af1536f6-e01c-42d6-b428-f3e601130ee4",
       technologies: ["Python", "Pandas", "Flask"],
       category: "ai",
       github: "https://github.com/SriSrik123/AIProductRecommender",
@@ -50,7 +50,8 @@ export default function ProjectsSection() {
       title: "SwiftFillAI",
       description:
         "Chrome extension using AI for web assistance and automated form filling.",
-      image: "https://opengraph.githubassets.com/1/SriSrik123/SwiftFillAI",
+      image:
+        "https://harmless-tapir-303.convex.cloud/api/storage/a49f20da-229f-4933-b75d-31c62b55a69e",
       technologies: ["Google Gemini", "JavaScript"],
       category: "ai",
       github: "https://github.com/SriSrik123/SwiftFillAI",
@@ -59,19 +60,30 @@ export default function ProjectsSection() {
     {
       title: "ASlearn - AI Sign Language Platform",
       description:
-        "Real-time sign recognition with YOLO v5 and PyTorch; Flask backend on AWS.",
-      image: "https://opengraph.githubassets.com/1/SriSrik123/ASlearn",
-      technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLO v5"],
+        "Real-time sign recognition with YOLOv5 and PyTorch; Flask backend on AWS.",
+      image:
+        "https://harmless-tapir-303.convex.cloud/api/storage/b0d97b20-705d-42a7-b95c-bbd996862d90",
+      technologies: ["React.js", "Flask", "PyTorch", "AWS", "YOLOv5"],
       category: "ai",
       github: "https://github.com/SriSrik123/ASlearn",
       live: "#",
     },
     {
-      title: "Workout Tracker",
+      title: "Coached - AI Fitness Tracking App",
       description:
-        "Sport-focused workout tracking with analytics and mobile-first experience.",
-      image: "https://opengraph.githubassets.com/1/SriSrik123/Workout-Tracker",
-      technologies: ["React", "TypeScript", "Tailwind", "Capacitor"],
+        "Full‑stack AI app delivering sport‑specific workout plans, analytics, and social features.",
+      image:
+        "https://harmless-tapir-303.convex.cloud/api/storage/80a84346-89cf-41e2-b079-12d925e3cf3d",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "Radix UI",
+        "shadcn/ui",
+        "Capacitor",
+        "Supabase",
+        "Google Gemini",
+      ],
       category: "fullstack",
       github: "https://github.com/SriSrik123/Workout-Tracker",
       live: "#",
