@@ -1,0 +1,2 @@
+# No Python dependencies are required for this project.
+# This is a TypeScript/React/Convex app. Add Python packages here if you later add any Python code/services.
