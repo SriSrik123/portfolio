@@ -6,6 +6,30 @@ import { ExternalLink, Github, Filter } from "lucide-react";
 import { useState, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
+function FallbackImage({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="w-full h-full grid place-items-center bg-gradient-to-br from-primary/15 via-ring/15 to-accent/15 text-muted-foreground">
+        <span className="px-3 py-1 text-sm">{alt}</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="w-full h-full object-cover"
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 export default function ProjectsSection() {
   const [filter, setFilter] = useState("all");
   const scrollerRef = useRef<HTMLDivElement | null>(null);
@@ -142,13 +166,9 @@ export default function ProjectsSection() {
                 >
                   <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
                     <div className="aspect-video overflow-hidden rounded-t-lg">
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        whileHover={{ scale: 1.06 }}
-                        transition={{ duration: 0.35 }}
-                      />
+                      <motion.div whileHover={{ scale: 1.06 }} transition={{ duration: 0.35 }} className="w-full h-full">
+                        <FallbackImage src={project.image} alt={project.title} />
+                      </motion.div>
                     </div>
                     <CardHeader>
                       <CardTitle className="text-xl text-primary">
