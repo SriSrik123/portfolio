@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { ChevronDown, Download, Github, Linkedin } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronDown, Github, Linkedin } from "lucide-react";
+import { useRef } from "react";
 import Prism from "@/components/Prism";
 
 interface HeroSectionProps {
@@ -8,8 +11,42 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onSectionClick }: HeroSectionProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  // Track scroll relative to this section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Prism opacity: fully visible at top, fades out as you scroll down
+  const prismOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative gradient-bg pt-24">
+    <section
+      ref={sectionRef}
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden"
+    >
+      {/* Prism full background with fade-out */}
+      <motion.div
+        className="absolute inset-0 -z-10"
+        style={{ opacity: prismOpacity }}
+      >
+        <Prism
+          animationType="rotate"
+          timeScale={0.5}
+          height={3.5}
+          baseWidth={5.5}
+          scale={3.6}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0.5}
+          glow={1}
+        />
+      </motion.div>
+
+      {/* Hero Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Profile Image */}
         <motion.div
@@ -18,22 +55,8 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8"
         >
-          {/* WebGL blue animation behind profile image */}
           <div className="relative mx-auto w-64 h-64">
-            <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-              <Prism
-                animationType="rotate"
-                timeScale={0.7}
-                height={4.2}
-                baseWidth={6.2}
-                scale={3.4}
-                hueShift={-8}
-                colorFrequency={1.8}
-                noise={0.9}
-                glow={3.0}
-              />
-            </div>
-            <div className="relative z-10 w-48 h-48 mx-auto rounded-full overflow-hidden neon-border border-primary ring-2 ring-primary/30">
+            <div className="relative z-10 w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
               <img
                 src="/images/profile.jpg"
                 alt="Profile photo"
@@ -43,44 +66,16 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           </div>
         </motion.div>
 
-        {/* Name and Title with animated backdrop */}
+        {/* Name and Title */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="relative"
         >
-          {/* layered 'video-like' blur orbs behind the name */}
-          <motion.div
-            aria-hidden
-            className="absolute inset-x-0 -inset-y-6 -z-10 mx-auto w-[85%] h-28 rounded-[999px] blur-2xl"
-            style={{
-              background:
-                "linear-gradient(90deg, color-mix(in oklch, var(--primary) 65%, black), color-mix(in oklch, var(--ring) 65%, black))",
-              opacity: 0.22,
-            }}
-            animate={{ backgroundPositionX: ["0%", "100%", "0%"] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div
-            aria-hidden
-            className="absolute -z-10 left-1/4 top-[-10px] w-24 h-24 rounded-full blur-[30px]"
-            style={{ background: "oklch(0.72 0.14 240 / 0.55)" }}
-            animate={{ x: [0, 40, -10, 0], y: [0, -10, 10, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            aria-hidden
-            className="absolute -z-10 right-1/4 top-[-20px] w-28 h-28 rounded-full blur-[34px]"
-            style={{ background: "oklch(0.74 0.12 235 / 0.5)" }}
-            animate={{ x: [0, -30, 15, 0], y: [0, 10, -8, 0] }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-          />
-
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-glow">
             Hi, I'm <span className="text-primary">Srinarayan Srikanth</span>
           </h1>
-          {/* animated underline accent behind the name */}
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
@@ -113,7 +108,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
         >
-          Passionate Computer Science student with hands-on experience building AI agents to optimize workflows. 
+          Passionate Computer Science student with hands-on experience building AI agents to optimize workflows.
           Skilled in applying real-world solutions through internships at companies like Neural Metrics and Comcast.
         </motion.p>
 
@@ -166,7 +161,6 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           >
             <Linkedin className="h-8 w-8" />
           </motion.a>
-          {/* HackerRank link - remove box styling */}
           <motion.a
             href="http://hackerrank.com/profile/hellosri2006"
             target="_blank"
