@@ -177,7 +177,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             <img
               src="/images/hackerrank.png"
               alt="HackerRank"
-              className="h-16 w-auto object-contain"
+              className="h-8 w-8 object-contain"
               loading="lazy"
               decoding="async"
               referrerPolicy="no-referrer"
