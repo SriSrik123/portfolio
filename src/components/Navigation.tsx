@@ -45,14 +45,8 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold text-primary cursor-pointer"
-              onClick={() => onSectionClick("hero")}
-            >
-              SS
-            </motion.div>
+            {/* Logo removed; keep minimal spacer for layout */}
+            <div className="w-6" aria-hidden />
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
@@ -71,8 +65,6 @@ export default function Navigation({ activeSection, onSectionClick }: Navigation
                 </Button>
               ))}
             </div>
-
-            {/* Desktop Social Links removed */}
 
             {/* Mobile Menu Button */}
             <Button

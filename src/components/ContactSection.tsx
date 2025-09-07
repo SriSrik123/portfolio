@@ -1,19 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Github, Linkedin, Mail, MapPin } from "lucide-react";
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-
   const contactInfo = [
     {
       icon: Mail,
@@ -41,22 +31,6 @@ export default function ContactSection() {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate form submission
-    toast("Message sent successfully! I'll get back to you soon.", {
-      description: "Thank you for reaching out.",
-    });
-    setFormData({ name: "", email: "", message: "" });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -75,75 +49,36 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Additional Info moved above the contact info box */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30">
-              <CardHeader>
-                <CardTitle className="text-2xl text-primary">Send a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      name="name"
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="bg-background/50 border-border focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="bg-background/50 border-border focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={6}
-                      className="bg-background/50 border-border focus:border-primary resize-none"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 neon-glow cursor-pointer"
-                  >
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Message
-                  </Button>
-                </form>
+            <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-ring mb-4">Let's Connect!</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Whether you're interested in collaborating on a project, discussing opportunities,
+                  or just want to chat about technology and innovation, I'd love to hear from you.
+                  I'm always excited to connect with fellow developers, entrepreneurs, and tech enthusiasts.
+                </p>
               </CardContent>
             </Card>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Centered Contact Information box */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-6"
           >
             <Card className="bg-card/30 backdrop-blur-sm border-accent/30">
               <CardHeader>
-                <CardTitle className="text-2xl text-accent">Contact Information</CardTitle>
+                <CardTitle className="text-2xl text-accent text-center">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {contactInfo.map((info, index) => (
@@ -168,18 +103,6 @@ export default function ContactSection() {
                     </div>
                   </motion.a>
                 ))}
-              </CardContent>
-            </Card>
-
-            {/* Additional Info */}
-            <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-ring mb-4">Let's Connect!</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Whether you're interested in collaborating on a project, discussing opportunities, 
-                  or just want to chat about technology and innovation, I'd love to hear from you. 
-                  I'm always excited to connect with fellow developers, entrepreneurs, and tech enthusiasts.
-                </p>
               </CardContent>
             </Card>
           </motion.div>
