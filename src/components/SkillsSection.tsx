@@ -21,7 +21,7 @@ export default function SkillsSection() {
       title: "Backend/Database",
       icon: Database,
       color: "text-ring",
-      skills: ["Flask", "FastAPI", "Supabase", "Firebase", "REST API"]
+      skills: ["FastAPI", "Supabase", "Firebase", "REST API"]
     },
     {
       title: "Cloud Platforms",
@@ -45,13 +45,7 @@ export default function SkillsSection() {
       title: "AI/ML & APIs",
       icon: Award,
       color: "text-accent",
-      skills: ["PyTorch", "YOLOvX", "OpenCV", "NLP", "Tesseract", "Regex", "Google Gemini", "Mistral", "OpenAI", "Qwen", "Llama", "PyMuPDF", "LayoutParser"]
-    },
-    {
-      title: "Other",
-      icon: Award,
-      color: "text-accent",
-      skills: ["Final Cut Pro X", "FAA-Certified Drone Pilot"]
+      skills: ["PyTorch", "YOLO v5", "OpenCV", "Tesseract", "Regex", "Google Gemini", "Mistral", "OpenAI", "Owen", "Llama", "PyMuPDF", "LayoutParser"]
     }
   ];
 
