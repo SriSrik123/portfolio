@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin } from "lucide-react";
 
 export default function ContactSection() {
   const contactInfo = [
@@ -49,46 +49,36 @@ export default function ContactSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Replace Contact Form with a simple Email CTA card */}
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Additional Info moved above the contact info box */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30">
-              <CardHeader>
-                <CardTitle className="text-2xl text-primary">Email Me</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <p className="text-muted-foreground">
-                  Prefer email? Click below to open your email client with my address.
+            <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold text-ring mb-4">Let's Connect!</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Whether you're interested in collaborating on a project, discussing opportunities,
+                  or just want to chat about technology and innovation, I'd love to hear from you.
+                  I'm always excited to connect with fellow developers, entrepreneurs, and tech enthusiasts.
                 </p>
-                <Button
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 neon-glow cursor-pointer"
-                  asChild
-                >
-                  <a href="mailto:srinarayan.srikanth@gmail.com">
-                    <Send className="h-4 w-4 mr-2" />
-                    Compose Email
-                  </a>
-                </Button>
               </CardContent>
             </Card>
           </motion.div>
 
-          {/* Contact Information */}
+          {/* Centered Contact Information box */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-6"
           >
             <Card className="bg-card/30 backdrop-blur-sm border-accent/30">
               <CardHeader>
-                <CardTitle className="text-2xl text-accent">Contact Information</CardTitle>
+                <CardTitle className="text-2xl text-accent text-center">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {contactInfo.map((info, index) => (
@@ -113,18 +103,6 @@ export default function ContactSection() {
                     </div>
                   </motion.a>
                 ))}
-              </CardContent>
-            </Card>
-
-            {/* Additional Info */}
-            <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-ring mb-4">Let's Connect!</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Whether you're interested in collaborating on a project, discussing opportunities, 
-                  or just want to chat about technology and innovation, I'd love to hear from you. 
-                  I'm always excited to connect with fellow developers, entrepreneurs, and tech enthusiasts.
-                </p>
               </CardContent>
             </Card>
           </motion.div>
