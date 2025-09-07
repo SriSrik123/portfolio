@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import type { Renderer, Program, Mesh, Triangle } from "ogl";
 import { useEffect, useRef, useState } from "react";
 
+// Minimal OGL-based shader animation that reacts to cursor and time.
+// Keeps types loose to avoid build/type issues.
 export default function Prism(props: {
   animationType?: "rotate" | "pulse";
   timeScale?: number;
@@ -35,11 +35,13 @@ export default function Prism(props: {
     const canvas = canvasRef.current!;
     let raf = 0;
 
-    // Lazy import OGL to avoid SSR issues
-    let renderer: Renderer | null = null;
+    // Lazy import to reduce initial bundle and avoid SSR pitfalls
+    let ogl: any;
+    let renderer: any;
     let gl: WebGLRenderingContext | WebGL2RenderingContext | null = null;
-    let program: Program | null = null;
-    let mesh: Mesh | null = null;
+    let program: any;
+    let mesh: any;
+    let triangle: any;
     let start = performance.now();
     const mouse = { x: 0.5, y: 0.5 };
 
@@ -50,6 +52,7 @@ export default function Prism(props: {
       }
     `;
 
+    // Fullscreen fragment shader with subtle blue gradients, noise, and cursor-reactive glow
     const fragment = `
       precision highp float;
 
@@ -65,6 +68,7 @@ export default function Prism(props: {
       uniform float u_scale;
       uniform int u_mode;
 
+      // Hash & noise helpers
       float hash(vec2 p) {
         p = vec2( dot(p, vec2(127.1,311.7)),
                   dot(p, vec2(269.5,183.3)) );
@@ -89,6 +93,7 @@ export default function Prism(props: {
         return vec3(L, a, b);
       }
 
+      // Approximate oklab to sRGB
       vec3 oklab_to_srgb(vec3 c) {
         float l = c.x + 0.3963377774*c.y + 0.2158037573*c.z;
         float m = c.x - 0.1055613458*c.y - 0.0638541728*c.z;
@@ -106,9 +111,10 @@ export default function Prism(props: {
       }
 
       vec3 bluePalette(float t, float hueShift) {
+        // Base cool blues in OKLCH, modulated by t and hue shift
         float L = 0.62 + 0.18 * sin(t * 0.5);
         float C = 0.10 + 0.06 * cos(t * 0.8);
-        float H = radians(240.0 + hueShift);
+        float H = radians(240.0 + hueShift); // around blue
         return clamp(oklab_to_srgb(oklch_to_oklab(vec3(L, C, H))), 0.0, 1.0);
       }
 
@@ -116,13 +122,16 @@ export default function Prism(props: {
         vec2 uv = gl_FragCoord.xy / u_resolution.xy;
         vec2 p = (uv - 0.5) * vec2(u_resolution.x/u_resolution.y, 1.0);
 
+        // Animated bands/flow
         float t = u_time;
         float n = noise2d(p * (2.0 + u_colorFreq*2.0) + t*0.1);
         float flow = sin((p.y * u_height + t * 0.8) + n * u_noise * 2.5);
 
+        // Cursor glow
         float d = distance(uv, u_mouse);
         float glow = u_glow * 0.35 / (d * 8.0 + 0.02);
 
+        // Optional mode transform
         if (u_mode == 0) {
           p *= mat2(cos(t*0.1), -sin(t*0.1), sin(t*0.1), cos(t*0.1));
         }
@@ -131,8 +140,10 @@ export default function Prism(props: {
         vec3 base = bluePalette(t + band * 2.0, u_hueShift);
         vec3 col = base;
 
+        // Accentuate with gradient and glow
         col += glow * vec3(0.2, 0.35, 0.6);
 
+        // Vignette
         float vig = smoothstep(1.1, u_scale, length(p) + 0.2);
         col *= vig;
 
@@ -147,40 +158,14 @@ export default function Prism(props: {
     }
 
     async function init() {
-      const mod = await import("ogl");
-      const { Renderer, Program, Triangle, Mesh } = mod;
       try {
         const mod = await import("ogl");
         ogl = mod as any;
 
-      renderer = new Renderer({
-        dpr: Math.min(2, window.devicePixelRatio || 1),
-        canvas,
-      });
-      gl = renderer.gl;
-      gl.clearColor(0, 0, 0, 0);
         renderer = new ogl.Renderer({ dpr: Math.min(2, window.devicePixelRatio || 1), canvas });
         gl = renderer.gl;
         gl?.clearColor(0, 0, 0, 0);
 
-      const triangle = new Triangle(gl);
-      program = new Program(gl, {
-        vertex,
-        fragment,
-        uniforms: {
-          u_time: { value: 0 },
-          u_resolution: { value: [canvas.width, canvas.height] },
-          u_mouse: { value: [0.5, 0.5] },
-          u_hueShift: { value: hueShift },
-          u_colorFreq: { value: colorFrequency },
-          u_noise: { value: noise },
-          u_glow: { value: glow },
-          u_height: { value: height },
-          u_baseWidth: { value: baseWidth },
-          u_scale: { value: scale },
-          u_mode: { value: animationType === "rotate" ? 0 : 1 },
-        },
-      });
         const triangleGeo = new ogl.Triangle(gl);
         triangle = triangleGeo;
 
@@ -202,18 +187,8 @@ export default function Prism(props: {
           },
         });
 
-      mesh = new Mesh(gl, { geometry: triangle, program });
         mesh = new ogl.Mesh(gl, { geometry: triangle, program });
 
-      function resize() {
-        const { clientWidth, clientHeight } = container;
-        renderer!.setSize(clientWidth, clientHeight);
-        program!.uniforms.u_resolution.value = [
-          gl!.canvas.width,
-          gl!.canvas.height,
-        ];
-      }
-      resize();
         function resize() {
           const { clientWidth, clientHeight } = container;
           renderer.setSize(clientWidth, clientHeight);
@@ -224,14 +199,6 @@ export default function Prism(props: {
         window.addEventListener("resize", resize);
         window.addEventListener("mousemove", onMouseMove, { passive: true });
 
-      const loop = () => {
-        const t = ((performance.now() - start) / 1000) * timeScale;
-        program!.uniforms.u_time.value = t;
-        program!.uniforms.u_mouse.value = [mouse.x, mouse.y];
-        renderer!.render({ scene: mesh! });
-        raf = requestAnimationFrame(loop);
-      };
-      loop();
         const loop = () => {
           const t = (performance.now() - start) / 1000 * timeScale;
           program.uniforms.u_time.value = t;
@@ -242,15 +209,6 @@ export default function Prism(props: {
         };
         loop();
 
-      destroyRef.current = () => {
-        cancelAnimationFrame(raf);
-        window.removeEventListener("resize", resize);
-        window.removeEventListener("mousemove", onMouseMove);
-        try {
-          gl &&
-            gl.getExtension("WEBGL_lose_context")?.loseContext();
-        } catch {}
-      };
         destroyRef.current = () => {
           cancelAnimationFrame(raf);
           window.removeEventListener("resize", resize);
@@ -274,20 +232,6 @@ export default function Prism(props: {
   }, [animationType, timeScale, height, baseWidth, scale, hueShift, colorFrequency, noise, glow]);
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: -1, // stays behind content
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        style={{ width: "100%", height: "100%", display: "block" }}
-      />
     <div ref={containerRef} style={{ position: "absolute", inset: 0 }}>
       {/* Fallback animated gradient if WebGL fails */}
       {fallback ? (
