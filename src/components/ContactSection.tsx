@@ -1,19 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-
   const contactInfo = [
     {
       icon: Mail,
@@ -41,22 +31,6 @@ export default function ContactSection() {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate form submission
-    toast("Message sent successfully! I'll get back to you soon.", {
-      description: "Thank you for reaching out.",
-    });
-    setFormData({ name: "", email: "", message: "" });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -76,7 +50,7 @@ export default function ContactSection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
+          {/* Replace Contact Form with a simple Email CTA card */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -85,50 +59,21 @@ export default function ContactSection() {
           >
             <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30">
               <CardHeader>
-                <CardTitle className="text-2xl text-primary">Send a Message</CardTitle>
+                <CardTitle className="text-2xl text-primary">Email Me</CardTitle>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      name="name"
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="bg-background/50 border-border focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="bg-background/50 border-border focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={6}
-                      className="bg-background/50 border-border focus:border-primary resize-none"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 neon-glow cursor-pointer"
-                  >
+              <CardContent className="space-y-6">
+                <p className="text-muted-foreground">
+                  Prefer email? Click below to open your email client with my address.
+                </p>
+                <Button
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 neon-glow cursor-pointer"
+                  asChild
+                >
+                  <a href="mailto:srinarayan.srikanth@gmail.com">
                     <Send className="h-4 w-4 mr-2" />
-                    Send Message
-                  </Button>
-                </form>
+                    Compose Email
+                  </a>
+                </Button>
               </CardContent>
             </Card>
           </motion.div>
