@@ -13,6 +13,11 @@ import Prism from "@/components/Prism";
 export default function Landing() {
   const [activeSection, setActiveSection] = useState("hero");
 
+  // Set site title
+  useEffect(() => {
+    document.title = "Srinarayan Srikanth";
+  }, []);
+
   // Add scroll progress hooks
   const { scrollYProgress } = useScroll();
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]); // background prism scale
