@@ -37,7 +37,7 @@ export default function ContactSection() {
       icon: MapPin,
       label: "HackerRank",
       value: "hellosri2006",
-      href: "https://www.hackerrank.com/profile/hellosri2006f"
+      href: "https://www.hackerrank.com/profile/hellosri2006"
     }
   ];
 
