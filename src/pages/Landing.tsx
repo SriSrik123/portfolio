@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -18,13 +18,23 @@ export default function Landing() {
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]); // background prism scale
   const bgY = useTransform(scrollYProgress, [0, 1], [0, -120]); // subtle parallax up
 
-  // Section parallax and scale
-  const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 1.02]);
-  const aboutY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const expY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const projY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const skillsY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const contactY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const sectionScale = useTransform(scrollYProgress, [0, 1], [1, 1.03]);
+  const aboutY = useTransform(scrollYProgress, [0, 1], [0, -45]);
+  const expY = useTransform(scrollYProgress, [0, 1], [0, -65]);
+  const projY = useTransform(scrollYProgress, [0, 1], [0, -85]);
+  const skillsY = useTransform(scrollYProgress, [0, 1], [0, -105]);
+  const contactY = useTransform(scrollYProgress, [0, 1], [0, -125]);
+
+  // Add smooth springs to reduce jitter and polish motion
+  const springCfg = { stiffness: 80, damping: 22, mass: 0.25 };
+  const sBgScale = useSpring(bgScale, springCfg);
+  const sBgY = useSpring(bgY, springCfg);
+  const sSectionScale = useSpring(sectionScale, springCfg);
+  const sAboutY = useSpring(aboutY, springCfg);
+  const sExpY = useSpring(expY, springCfg);
+  const sProjY = useSpring(projY, springCfg);
+  const sSkillsY = useSpring(skillsY, springCfg);
+  const sContactY = useSpring(contactY, springCfg);
 
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
@@ -68,7 +78,7 @@ export default function Landing() {
       {/* Rotating Prism background with scroll-reactive scale & parallax */}
       <motion.div
         className="fixed inset-0 -z-10 opacity-[0.7] pointer-events-none"
-        style={{ scale: bgScale, y: bgY }}
+        style={{ scale: sBgScale, y: sBgY }}
       >
         <Prism
           animationType="rotate"
@@ -88,19 +98,19 @@ export default function Landing() {
       <main>
         {/* Each section gets subtle scroll-tied movement/scale */}
         <HeroSection onSectionClick={scrollToSection} />
-        <motion.div style={{ y: aboutY, scale: sectionScale }}>
+        <motion.div style={{ y: sAboutY, scale: sSectionScale }}>
           <AboutSection />
         </motion.div>
-        <motion.div style={{ y: expY, scale: sectionScale }}>
+        <motion.div style={{ y: sExpY, scale: sSectionScale }}>
           <ExperienceSection />
         </motion.div>
-        <motion.div style={{ y: projY, scale: sectionScale }}>
+        <motion.div style={{ y: sProjY, scale: sSectionScale }}>
           <ProjectsSection />
         </motion.div>
-        <motion.div style={{ y: skillsY, scale: sectionScale }}>
+        <motion.div style={{ y: sSkillsY, scale: sSectionScale }}>
           <SkillsSection />
         </motion.div>
-        <motion.div style={{ y: contactY, scale: sectionScale }}>
+        <motion.div style={{ y: sContactY, scale: sSectionScale }}>
           <ContactSection />
         </motion.div>
       </main>
