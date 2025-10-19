@@ -12,7 +12,7 @@ export default function SkillsSection() {
       skills: ["Python", "Java", "C++", "SQL", "JavaScript", "TypeScript", "HTML/CSS"]
     },
     {
-      title: "Frontend Libraries/Frameworks", 
+      title: "Frontend Libraries/Frameworks",
       icon: Code,
       color: "text-accent",
       skills: ["React", "Angular", "Tailwind CSS", "React Query", "React Hook Form", "Recharts", "Next-Themes", "Lucide React"]
@@ -21,7 +21,7 @@ export default function SkillsSection() {
       title: "Backend/Database",
       icon: Database,
       color: "text-ring",
-      skills: ["FastAPI", "Supabase", "Firebase", "REST API"]
+      skills: ["Flask", "FastAPI", "Supabase", "Firebase", "REST API"]
     },
     {
       title: "Cloud Platforms",
@@ -45,11 +45,15 @@ export default function SkillsSection() {
       title: "AI/ML & APIs",
       icon: Award,
       color: "text-accent",
-      skills: ["PyTorch", "YOLO v5", "OpenCV", "Tesseract", "Regex", "Google Gemini", "Mistral", "OpenAI", "Owen", "Llama", "PyMuPDF", "LayoutParser"]
+      skills: ["PyTorch", "YOLOvX", "OpenCV", "Tesseract", "Regex", "Gemini", "Mistral", "OpenAI", "Qwen", "Llama", "PyMuPDF", "LayoutParser"]
     }
   ];
 
   const certifications = [
+    {
+      title: "Microsoft",
+      courses: ["Azure AI Essentials Professional Certificate"]
+    },
     {
       title: "Full Stack Web Development",
       issuer: "Indian Institute of Technology (IIT)",

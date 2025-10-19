@@ -6,29 +6,55 @@ import { Building, Calendar, MapPin, Trophy } from "lucide-react";
 export default function ExperienceSection() {
   const experiences = [
     {
-      title: "AI Strategy, Business Development & Transformation Co-op",
+      title: "AI Strategy, Development & Business Transformation Co-op",
       company: "Comcast Corporation",
       location: "Philadelphia, PA",
       period: "Sept 2025 - Present",
       description: [
-        "Support strategic AI/ML initiatives across Comcast, including partnership evaluations, M&A opportunities, and enterprise-wide AI adoption.",
-        "Construct business cases with financial models and executive-ready presentations for senior leadership across Comcast Cable, Sky, and NBCUniversal.",
-        "Conduct research on emerging AI/ML markets, startups, and technology trends, shaping Comcast's trajectory in AI integration.",
-        "Participate in high-profile projects where contributions are shared directly with top executives, influencing long-term strategy."
+        "Collaborate with senior executives and business units to identify high-impact AI use cases and drive enterprise-wide adoption.",
+        "Research and evaluate emerging AI tools, startups, and partnerships to strengthen Comcast’s internal AI capabilities and strategic position.",
+        "Develop, prototype, and demo AI-powered applications and tools for executive leadership, supporting deployment across multiple departments.",
+        "Support go-to-market strategies, partnership evaluations, and implementation of new AI technologies within Comcast’s ecosystem."
       ],
       current: true
     },
     {
-      title: "AI Product Intern",
+      title: "AI Product Development Intern",
       company: "Neural Metrics",
       location: "Chennai, India",
-      period: "July 2025 - September 2025",
+      period: "July 2025 - Sept 2025",
       description: [
-        "Identified and solved crucial challenges in team productivity and code quality by developing an AI-driven intelligent code verification system.",
-        "Integrated solution with Bitbucket and Jira, reducing manual review efforts by 50%.",
-        "Developed an AI-powered PDF extraction tool using FastAPI, OpenCV, Tesseract, Regex, PyMuPDF, and LayoutParser to handle complex documents such as ACORD forms.",
-        "Streamlined CI/CD processes with Jenkins, Docker, and AWS (Bedrock, ECS, Lambda, ECR), enhancing deployment efficiency.",
-        "Implemented a prompt evaluation system and logging framework for AI Ops, ensuring high confidence in model recommendations and ongoing monitoring of performance."
+        "Identified and solved critical challenges in team productivity and code quality by developing an AI-driven intelligent code verification system integrated with Bitbucket and Jira.",
+        "Built an AI-powered PDF extraction pipeline using FastAPI, OpenCV, Tesseract, Regex, PyMuPDF, and LayoutParser to process complex business forms such as ACORD documents.",
+        "Enhanced CI/CD processes using Jenkins, Docker, and AWS (Bedrock, ECS, Lambda, ECR) to streamline deployment workflows.",
+        "Developed a prompt evaluation system and logging framework for AI Ops, improving model confidence tracking and performance monitoring."
+      ],
+      current: false
+    },
+    {
+      title: "Swim Coach, Swim Instructor, Lifeguard",
+      company: "Lifetime Health & Fitness Center",
+      location: "Princeton, NJ",
+      period: "June 2023 - July 2025",
+      description: [
+        "Ensured the safety of children in and around the pool while enforcing facility safety policies and maintaining situational awareness.",
+        "Designed and led swim lessons and training sessions tailored to varying age groups and skill levels.",
+        "Maintained clear communication with parents regarding progress, addressing questions and concerns proactively.",
+        "Created an engaging, supportive learning environment to foster confidence and skill development among young swimmers.",
+        "Customized instruction plans for children with special needs and specific goals, ensuring personalized progress and safety."
+      ],
+      current: false
+    },
+    {
+      title: "Philanthropic Co-Founder",
+      company: "Community Bike Repair Shop",
+      location: "Princeton, NJ",
+      period: "June 2021 - August 2024",
+      description: [
+        "Founded a neighborhood bike repair shop to provide affordable repair services during the COVID-19 pandemic when traditional shops were closed.",
+        "Managed operations including purchasing, budgeting, marketing, and customer relations.",
+        "Served the community by offering quick, low-cost repair options while building strong relationships with local residents.",
+        "Developed entrepreneurial, customer service, and technical problem-solving skills through hands-on business management."
       ],
       current: false
     }
@@ -38,9 +64,9 @@ export default function ExperienceSection() {
     {
       title: "American National Team Swimmer",
       achievements: [
-        "Captain - PTAC Swim Club; won 20+ gold medals at state and regional meets (2016-2024).",
-        "Three-time high school sectional finalist (2021-2024).",
-        "Represented at national-level competitions; awarded 'Best Overall Freshman' at Nationals 2025."
+        "Captain - PTAC Swim Club; won 20+ gold medals at state and regional meets (2016–2024).",
+        "Three-time high school sectional finalist (2021–2024).",
+        "Represented the U.S. at national-level competitions; awarded 'Best Overall Freshman' at Nationals 2025."
       ]
     }
   ];
