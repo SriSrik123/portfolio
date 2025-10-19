@@ -52,7 +52,7 @@ export default function SkillsSection() {
   const certifications = [
     {
       title: "Microsoft",
-      courses: ["Azure AI Essentials Professional Certificate"]
+      courses: ["Azure Fundamentals"]
     },
     {
       title: "Full Stack Web Development",
