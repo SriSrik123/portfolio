@@ -4,10 +4,14 @@ import { Toaster } from "@/components/ui/sonner";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import { InstrumentationProvider } from "@/instrumentation.tsx";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { inject } from "@vercel/analytics";
 import "./index.css";
 import Landing from "./pages/Landing.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import "./types/global.d.ts";
+
+// Initialize Vercel Web Analytics
+inject();
 
 function RouteSyncer() {
   const location = useLocation();
