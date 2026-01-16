@@ -36,7 +36,7 @@ export default function ProjectsSection() {
 
   const projects = [
     {
-      title: "Coached - AI Fitness Tracking App",
+      title: "Coached",
       description:
         "Full-stack AI app delivering sport-specific workout plans, analytics, and social features.",
       image: "/images/coached.png",
@@ -56,7 +56,7 @@ export default function ProjectsSection() {
       live: "#",
     },
     {
-      title: "EcoSnap - AI-Powered Sustainability App",
+      title: "EcoSnap",
       description:
         "AI-powered sustainability social app that gamifies environmental action through pollution reporting, plant identification, and community-driven challenges. Transforms everyday observations into crowdsourced, research-ready environmental data.",
       image: "/images/ecosnap.png",
@@ -79,7 +79,7 @@ export default function ProjectsSection() {
       live: "#",
     },
     {
-      title: "ASlearn - AI Sign Language Platform",
+      title: "ASlearn",
       description:
         "Built real-time sign recognition app with YOLOv5 and PyTorch for gesture detection. Flask backend deployed on AWS for scalability.",
       image: "/images/aslearn.png",
@@ -136,15 +136,15 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-glow">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             My Projects
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow mb-8"></div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A gallery of work in AI/ML and full‑stack development
+
           </p>
         </motion.div>
 
@@ -152,13 +152,14 @@ export default function ProjectsSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="flex flex-wrap justify-center gap-4 mb-8"
         >
           {projects.map((p, idx) => (
             <button
               key={p.title}
-              className="text-sm md:text-base text-muted-foreground hover:text-primary underline-offset-4 hover:underline cursor-pointer"
+              style={{ fontFamily: 'Baumans, sans-serif' }}
+              className="text-base md:text-lg text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer"
               onClick={() => scrollToProject(idx)}
             >
               {p.title}
@@ -170,7 +171,7 @@ export default function ProjectsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          viewport={{ once: false, margin: "0px 0px -100px 0px" }}
         >
           <ScrollArea className="w-full">
             <div
@@ -186,14 +187,14 @@ export default function ProjectsSection() {
                   transition={{ type: "spring", stiffness: 220, damping: 18 }}
                   className="w-[60vw] sm:w-[40vw] lg:w-[22vw] snap-start"
                 >
-                  <Card className="bg-card/60 backdrop-blur-sm border-border hover:border-primary/50 transition-all duration-300 h-full">
+                  <Card className="liquid-glass h-full">
                     <div className="overflow-hidden rounded-t-lg h-36 sm:h-44 lg:h-52">
                       <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.25 }} className="w-full h-full">
                         <FallbackImage src={project.image} alt={project.title} />
                       </motion.div>
                     </div>
                     <CardHeader>
-                      <CardTitle className="text-xl text-primary">
+                      <CardTitle className="text-2xl md:text-3xl mb-2 text-primary">
                         {project.title}
                       </CardTitle>
                       <p className="text-muted-foreground">

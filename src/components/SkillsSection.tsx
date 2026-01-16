@@ -45,7 +45,7 @@ export default function SkillsSection() {
       title: "AI/ML & APIs",
       icon: Award,
       color: "text-accent",
-      skills: ["PyTorch", "YOLOvX", "OpenCV", "Tesseract", "Regex", "Gemini", "Mistral", "OpenAI", "Qwen", "Llama", "PyMuPDF", "LayoutParser"]
+      skills: ["PyTorch", "YOLOvX", "OpenCV", "Tesseract", "Regex", "Claude", "Gemini", "Mistral", "OpenAI", "Qwen", "Llama", "PyMuPDF", "LayoutParser"]
     }
   ];
 
@@ -85,10 +85,10 @@ export default function SkillsSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-glow">Technical Skills</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Technical Skills</h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow"></div>
         </motion.div>
 
@@ -100,10 +100,10 @@ export default function SkillsSection() {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               whileHover={{ scale: 1.02 }}
             >
-              <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30 hover:border-primary/60 transition-all duration-300 h-full">
+              <Card className="liquid-glass h-full">
                 <CardHeader>
                   <CardTitle className={`text-lg flex items-center gap-3 ${category.color}`}>
                     <category.icon className="h-6 w-6 neon-glow" />
@@ -133,10 +133,10 @@ export default function SkillsSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="mb-16"
         >
-          <h3 className="text-2xl font-bold mb-8 text-center text-accent">Certifications</h3>
+          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center">Certifications</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {combinedCertifications.map((cert, index) => (
               <motion.div
@@ -144,9 +144,9 @@ export default function SkillsSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
               >
-                <Card className="bg-card/30 backdrop-blur-sm border-accent/30 hover:border-accent/60 transition-all duration-300">
+                <Card className="liquid-glass">
                   <CardHeader>
                     <CardTitle className="text-lg text-accent">{cert.title}</CardTitle>
                     {("issuer" in cert && cert.issuer) && (

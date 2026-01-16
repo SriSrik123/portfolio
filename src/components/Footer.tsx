@@ -9,13 +9,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border/50">
+    <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border/20 bg-transparent">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center"
         >
           {/* Social Links */}
@@ -39,10 +39,7 @@ export default function Footer() {
             <span>Made by Srinarayan Srikanth</span>
           </div>
 
-          {/* Tech Stack */}
-          <p className="text-sm text-muted-foreground mt-4">
-            Built with React, TypeScript, Tailwind CSS, and Framer Motion
-          </p>
+
         </motion.div>
       </div>
     </footer>

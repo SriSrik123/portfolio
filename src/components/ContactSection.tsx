@@ -38,47 +38,28 @@ export default function ContactSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-glow">Get In Touch</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow mb-8"></div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            I'm always open to discussing new projects, collaborations, or opportunities. 
+            I'm always open to discussing new projects, collaborations, or opportunities.
             Feel free to reach out!
           </p>
         </motion.div>
 
         <div className="max-w-2xl mx-auto space-y-6">
-          {/* Additional Info moved above the contact info box */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-card/30 backdrop-blur-sm border-ring/30">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-ring mb-4">Let's Connect!</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Whether you're interested in collaborating on a project, discussing opportunities,
-                  or just want to chat about technology and innovation, I'd love to hear from you.
-                  I'm always excited to connect with fellow developers, entrepreneurs, and tech enthusiasts.
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-
           {/* Centered Contact Information box */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
-            <Card className="bg-card/30 backdrop-blur-sm border-accent/30">
+            <Card className="liquid-glass">
               <CardHeader>
-                <CardTitle className="text-2xl text-accent text-center">Contact Information</CardTitle>
+                <CardTitle className="text-2xl text-accent">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {contactInfo.map((info, index) => (
@@ -90,7 +71,7 @@ export default function ContactSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     whileHover={{ scale: 1.02 }}
                     className="flex items-center gap-4 p-4 rounded-lg bg-background/30 hover:bg-background/50 transition-all duration-300 cursor-pointer group"
                   >

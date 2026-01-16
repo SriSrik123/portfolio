@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Github, Linkedin } from "lucide-react";
 import { useRef } from "react";
-import Prism from "@/components/Prism";
+
 
 interface HeroSectionProps {
   onSectionClick: (section: string) => void;
@@ -26,37 +26,28 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Prism full background with fade-out */}
       <motion.div
         className="absolute inset-0 -z-10"
         style={{ opacity: prismOpacity }}
       >
-        <Prism
-          animationType="rotate"
-          timeScale={0.5}
-          height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0.5}
-          glow={1}
-        />
+
       </motion.div>
 
       {/* Hero Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Profile Image */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8"
+          className="mb-8 mt-32"
         >
-          <div className="relative mx-auto w-64 h-64">
-            <div className="relative z-10 w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
+          <div className="relative mx-auto w-80 h-80">
+            <div className="relative z-10 w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
               <img
                 src="/images/profile.jpg"
                 alt="Profile photo"
@@ -69,18 +60,20 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         {/* Name and Title */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="relative"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-glow">
-            Hi, I'm <span className="text-primary">Srinarayan Srikanth</span>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            <span className="metallic-gradient">Srinarayan Srikanth</span>
           </h1>
           <motion.div
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: false }}
             transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
-            className="h-1 w-48 md:w-64 mx-auto rounded-full overflow-hidden mb-6 origin-left"
+            className="h-1 w-48 md:w-64 mx-auto rounded-full overflow-hidden mb-6"
           >
             <motion.div
               animate={{ backgroundPositionX: ["0%", "200%", "0%"] }}
@@ -93,29 +86,23 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
               }}
             />
           </motion.div>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-2">
-            Computer Science Student | AI/ML Enthusiast
+          <p className="text-xl md:text-2xl text-muted-foreground mb-2" style={{ fontFamily: 'Baumans, sans-serif' }}>
+            Comcast | Computer Science Student
           </p>
-          <p className="text-lg md:text-xl text-accent mb-8">
-            Full Stack Developer | National Team Swimmer
+          <p className="text-lg md:text-xl text-accent mb-2" style={{ fontFamily: 'Baumans, sans-serif' }}>
+            AI Strategy | AI/ML Enthusiast | Full Stack Developer
+          </p>
+          <p className="text-lg md:text-xl text-muted-foreground mb-8" style={{ fontFamily: 'Baumans, sans-serif' }}>
+            National Team Swimmer
           </p>
         </motion.div>
 
-        {/* Description */}
-        <motion.p
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
-        >
-          Passionate Computer Science student with hands-on experience building AI agents to optimize workflows.
-          Skilled in applying real-world solutions through internships at companies like Neural Metrics and Comcast.
-        </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
         >
@@ -139,7 +126,8 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         {/* Social Links */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8, delay: 1.0 }}
           className="flex justify-center space-x-6 mb-12"
         >

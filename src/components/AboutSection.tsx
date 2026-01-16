@@ -33,10 +33,10 @@ export default function AboutSection() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-glow">About Me</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">About Me</h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow"></div>
         </motion.div>
 
@@ -46,9 +46,9 @@ export default function AboutSection() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
-            <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30">
+            <Card className="liquid-glass">
               <CardContent className="p-8">
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                   I am a Computer Science student at Drexel University, Philadelphia, Class of 2029. I am also a proud recipient
@@ -69,7 +69,7 @@ export default function AboutSection() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-6"
           >
             {highlights.map((highlight, index) => (
@@ -78,12 +78,12 @@ export default function AboutSection() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 whileHover={{ scale: 1.05 }}
               >
-                <Card className="bg-card/30 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer">
-                  <CardContent className="p-6 text-center">
-                    <highlight.icon className="h-12 w-12 text-primary mx-auto mb-4 neon-glow" />
+                <Card className="liquid-glass cursor-pointer">
+                  <CardContent className="p-6 text-left">
+                    <highlight.icon className="h-12 w-12 text-primary mb-4 neon-glow" />
                     <h3 className="text-lg font-semibold mb-2 text-primary">{highlight.title}</h3>
                     <p className="text-sm text-muted-foreground">{highlight.description}</p>
                   </CardContent>

@@ -1,3 +1,6 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
+
 /* DO NOT CHANGE */
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -45,7 +48,8 @@
 /* DARK THEME — shift to cool blue palette, remove neon look */
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.08 0 0); /* deep charcoal */
+  --background: oklch(0.08 0 0);
+  /* deep charcoal */
   --foreground: oklch(0.98 0 0);
 
   --card: oklch(0.09 0 0);
@@ -54,21 +58,24 @@
   --popover-foreground: oklch(0.98 0 0);
 
   /* Cool blues (no neon) */
-  --primary: oklch(0.72 0.14 240); /* calm blue */
+  --primary: oklch(0.72 0.14 240);
+  /* calm blue */
   --primary-foreground: oklch(0.1 0 0);
   --secondary: oklch(0.16 0 0);
   --secondary-foreground: oklch(0.96 0 0);
 
   --muted: oklch(0.12 0 0);
-  --muted-foreground: oklch(0.75 0.02 250);
+  --muted-foreground: oklch(0.95 0 0);
 
-  --accent: oklch(0.78 0.12 220); /* soft cyan */
+  --accent: oklch(0.78 0.12 220);
+  /* soft cyan */
   --accent-foreground: oklch(0.1 0 0);
 
   --destructive: oklch(0.6 0.2 25);
   --border: oklch(0.22 0 0);
   --input: oklch(0.16 0 0);
-  --ring: oklch(0.74 0.12 235); /* focus blue */
+  --ring: oklch(0.74 0.12 235);
+  /* focus blue */
 
   /* unify charts to blue family */
   --chart-1: oklch(0.7 0.14 240);
@@ -99,7 +106,7 @@
   --secondary: oklch(0.16 0 0);
   --secondary-foreground: oklch(0.96 0 0);
   --muted: oklch(0.12 0 0);
-  --muted-foreground: oklch(0.75 0.02 250);
+  --muted-foreground: oklch(0.95 0 0);
   --accent: oklch(0.78 0.12 220);
   --accent-foreground: oklch(0.1 0 0);
   --destructive: oklch(0.6 0.2 25);
@@ -125,19 +132,116 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
   }
+
+  /* Apply Baumans to all headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Baumans', sans-serif;
+  }
+
+  /* Apply Baumans to card titles (project and work experience titles) */
+  [data-slot="card-title"] {
+    font-family: 'Baumans', sans-serif;
+  }
+}
+
+/* Metallic shine animation - gradient moves across text */
+@keyframes metallicShine {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Metallic chrome gradient for name */
+.metallic-gradient {
+  font-family: 'Black Ops One', serif !important;
+  background: linear-gradient(110deg,
+      #7dd3fc 0%,
+      /* Light blue/cyan */
+      #60a5fa 15%,
+      /* Sky blue */
+      #3b82f6 30%,
+      /* Bright blue */
+      #6366f1 45%,
+      /* Indigo */
+      #8b5cf6 60%,
+      /* Purple */
+      #a855f7 75%,
+      /* Bright purple */
+      #7c3aed 90%,
+      /* Deep purple */
+      #5b21b6 100%
+      /* Dark purple */
+    ) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+  text-shadow: none !important;
+  position: relative;
+
+  /* Rounded corners */
+  border-radius: 12px;
+  padding: 4px 8px;
+
+  /* Metallic shine effect */
+  filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.4)) drop-shadow(0 0 20px rgba(196, 113, 237, 0.3));
+
+  /* Only animate the gradient, not the text */
+  animation: metallicShine 3s linear infinite;
+}
+
+/* Hover effect - intensify the metallic shine */
+.metallic-gradient:hover {
+  filter: drop-shadow(0 2px 12px rgba(102, 126, 234, 0.6)) drop-shadow(0 0 30px rgba(196, 113, 237, 0.5));
 }
 
 /* Softer effects (remove neon look) */
 .neon-glow {
   box-shadow: 0 0 2px color-mix(in oklch, currentColor 40%, oklch(0.5 0 0));
 }
+
+/* Liquid Glass Effect */
+.liquid-glass {
+  background: color-mix(in oklch, var(--primary) 3%, transparent) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-radius: 28px !important;
+  border: 1px solid color-mix(in oklch, var(--primary) 15%, transparent) !important;
+  border-top-color: color-mix(in oklch, var(--primary) 35%, transparent) !important;
+  border-left-color: color-mix(in oklch, var(--primary) 35%, transparent) !important;
+  box-shadow:
+    0 10px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px color-mix(in oklch, var(--white) 10%, transparent) !important;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.liquid-glass:hover {
+  background: color-mix(in oklch, var(--primary) 6%, transparent) !important;
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, transparent) !important;
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 15px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
 .neon-border {
   border: 1px solid color-mix(in oklch, currentColor 45%, oklch(0.5 0 0));
   box-shadow: 0 0 1.5px color-mix(in oklch, currentColor 40%, oklch(0.5 0 0));
@@ -154,9 +258,17 @@
 }
 
 @keyframes gradientMove {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Softer text glow */
@@ -166,7 +278,15 @@
 
 /* Add keyframes for Prism fallback animation */
 @keyframes prismFallbackMove {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

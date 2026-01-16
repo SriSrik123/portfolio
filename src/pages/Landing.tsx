@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -12,10 +12,11 @@ import DarkVeil from "@/components/DarkVeil";
 
 export default function Landing() {
   const [activeSection, setActiveSection] = useState("hero");
+  const isProgrammaticScroll = useRef(false);
 
   // Set site title
   useEffect(() => {
-    document.title = "Srinarayan Srikanth";
+    document.title = "Srinarayan Srikanth Portfolio";
   }, []);
 
   // Add scroll progress hooks
@@ -45,6 +46,7 @@ export default function Landing() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
+      isProgrammaticScroll.current = true;
       const headerOffset = 64; // Height of fixed header
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
@@ -56,12 +58,19 @@ export default function Landing() {
 
       // Immediately update active section when clicking
       setActiveSection(sectionId);
+
+      // Clear the programmatic scroll flag after a delay to allow the smooth scroll to finish
+      setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 1000);
     }
   };
 
   // Update active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
+      if (isProgrammaticScroll.current) return;
+
       const sections = ["hero", "about", "experience", "projects", "skills", "contact"];
       const headerOffset = 100; // Offset from top to determine which section is "active"
 
@@ -95,7 +104,7 @@ export default function Landing() {
       >
         <div className="w-full h-full opacity-100">
           <DarkVeil
-            hueShift={0}
+            hueShift={20}
             noiseIntensity={0.05}
             scanlineIntensity={0.1}
             speed={0.4}
@@ -132,9 +141,10 @@ export default function Landing() {
           <motion.div style={{ y: sContactY, scale: sSectionScale }}>
             <ContactSection />
           </motion.div>
+          <motion.div style={{ y: sContactY, scale: sSectionScale }}>
+            <Footer />
+          </motion.div>
         </main>
-
-        <Footer />
       </motion.div>
     </>
   );
