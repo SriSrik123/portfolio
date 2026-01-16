@@ -45,7 +45,17 @@ export default function Landing() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const headerOffset = 64; // Height of fixed header
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+
+      // Immediately update active section when clicking
+      setActiveSection(sectionId);
     }
   };
 
@@ -53,15 +63,17 @@ export default function Landing() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["hero", "about", "experience", "projects", "skills", "contact"];
-      const scrollPosition = window.scrollY + 100;
+      const headerOffset = 100; // Offset from top to determine which section is "active"
 
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
+          const rect = element.getBoundingClientRect();
+          const elementTop = rect.top;
+          const elementBottom = rect.bottom;
 
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+          // Check if section is in the viewport (accounting for header)
+          if (elementTop <= headerOffset && elementBottom > headerOffset) {
             setActiveSection(section);
             break;
           }
@@ -69,26 +81,19 @@ export default function Landing() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Run on mount
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen bg-background text-foreground dark"
-    >
-      {/* DarkVeil animated background with scroll-reactive scale & parallax */}
+    <>
+      {/* DarkVeil animated background - always visible */}
       <div
         className="fixed inset-0 pointer-events-none"
         style={{ zIndex: 0, mixBlendMode: 'screen' }}
       >
-        <motion.div
-          className="w-full h-full opacity-100"
-          style={{ scale: sBgScale, y: sBgY }}
-        >
+        <div className="w-full h-full opacity-100">
           <DarkVeil
             hueShift={0}
             noiseIntensity={0.05}
@@ -98,32 +103,39 @@ export default function Landing() {
             warpAmount={0.4}
             resolutionScale={1}
           />
-        </motion.div>
+        </div>
       </div>
 
-      <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen bg-background text-foreground dark"
+      >
+        <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
 
-      <main className="relative z-10">
-        {/* Each section gets subtle scroll-tied movement/scale */}
-        <HeroSection onSectionClick={scrollToSection} />
-        <motion.div style={{ y: sAboutY, scale: sSectionScale }}>
-          <AboutSection />
-        </motion.div>
-        <motion.div style={{ y: sExpY, scale: sSectionScale }}>
-          <ExperienceSection />
-        </motion.div>
-        <motion.div style={{ y: sProjY, scale: sSectionScale }}>
-          <ProjectsSection />
-        </motion.div>
-        <motion.div style={{ y: sSkillsY, scale: sSectionScale }}>
-          <SkillsSection />
-        </motion.div>
-        <motion.div style={{ y: sContactY, scale: sSectionScale }}>
-          <ContactSection />
-        </motion.div>
-      </main>
+        <main className="relative z-10">
+          {/* Each section gets subtle scroll-tied movement/scale */}
+          <HeroSection onSectionClick={scrollToSection} />
+          <motion.div style={{ y: sAboutY, scale: sSectionScale }}>
+            <AboutSection />
+          </motion.div>
+          <motion.div style={{ y: sExpY, scale: sSectionScale }}>
+            <ExperienceSection />
+          </motion.div>
+          <motion.div style={{ y: sProjY, scale: sSectionScale }}>
+            <ProjectsSection />
+          </motion.div>
+          <motion.div style={{ y: sSkillsY, scale: sSectionScale }}>
+            <SkillsSection />
+          </motion.div>
+          <motion.div style={{ y: sContactY, scale: sSectionScale }}>
+            <ContactSection />
+          </motion.div>
+        </main>
 
-      <Footer />
-    </motion.div>
+        <Footer />
+      </motion.div>
+    </>
   );
 }

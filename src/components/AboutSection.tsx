@@ -7,7 +7,7 @@ export default function AboutSection() {
     {
       icon: BookOpen,
       title: "Education",
-      description: "Computer Science at Drexel University, Class of 2029, Pennoni Honors College"
+      description: "Computer Science at Drexel University, Class of 2029"
     },
     {
       icon: Award,
@@ -51,14 +51,13 @@ export default function AboutSection() {
             <Card className="bg-card/50 backdrop-blur-sm neon-border border-primary/30">
               <CardContent className="p-8">
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  I am a Computer Science student at Drexel University, Philadelphia, Class of 2029, and part of the Pennoni 
-                  Honors College. I am also a proud recipient of the A.J. Drexel Scholarship. My academic and professional 
-                  journey spans both the U.S. and India, where I've gained unique perspectives in applying AI and software 
-                  development to solve real-world challenges.
+                  I am a Computer Science student at Drexel University, Philadelphia, Class of 2029. I am also a proud recipient
+                  of the A.J. Drexel Scholarship. My academic and professional journey spans both the U.S. and India, where I've
+                  gained unique perspectives in applying AI and software development to solve real-world challenges.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  My passions lie in AI/ML, full-stack development, and building intelligent applications that create real 
-                  impact. From designing AI-powered systems at Neural Metrics to exploring AI strategy at Comcast, I thrive 
+                  My passions lie in AI/ML, full-stack development, and building intelligent applications that create real
+                  impact. From designing AI-powered systems at Neural Metrics to exploring AI strategy at Comcast, I thrive
                   at the intersection of technology and business transformation.
                 </p>
               </CardContent>
