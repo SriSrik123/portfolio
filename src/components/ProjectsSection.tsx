@@ -56,6 +56,29 @@ export default function ProjectsSection() {
       live: "#",
     },
     {
+      title: "EcoSnap - AI-Powered Sustainability App",
+      description:
+        "AI-powered sustainability social app that gamifies environmental action through pollution reporting, plant identification, and community-driven challenges. Transforms everyday observations into crowdsourced, research-ready environmental data.",
+      image: "/images/ecosnap.png",
+      technologies: [
+        "React Native",
+        "Expo",
+        "React",
+        "Tailwind CSS",
+        "Node.js",
+        "Express",
+        "Firebase Firestore",
+        "Google Gemini 2.5 Pro",
+        "xAI",
+        "Google Maps API",
+        "OpenWeatherMap",
+        "NASA FIRMS",
+      ],
+      category: "fullstack",
+      github: "https://github.com/SriSrik123/EcoSnap",
+      live: "#",
+    },
+    {
       title: "ASlearn - AI Sign Language Platform",
       description:
         "Built real-time sign recognition app with YOLOv5 and PyTorch for gesture detection. Flask backend deployed on AWS for scalability.",

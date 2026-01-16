@@ -36,9 +36,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="flex items-center justify-center gap-2 text-muted-foreground">
-            <span>© 2024 Srinarayan Srikanth. Made with</span>
-            <Heart className="h-4 w-4 text-accent fill-current" />
-            <span>and lots of coffee.</span>
+            <span>Made by Srinarayan Srikanth</span>
           </div>
 
           {/* Tech Stack */}
