@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, Github, Linkedin } from "lucide-react";
 import { useRef } from "react";
-
+import { HackerRankIcon } from "@/components/icons/HackerRankIcon";
 
 interface HeroSectionProps {
   onSectionClick: (section: string) => void;
@@ -37,7 +37,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
       </motion.div>
 
       {/* Hero Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center -translate-y-9">
         {/* Profile Image */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
@@ -46,7 +46,7 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8 mt-32"
         >
-          <div className="relative mx-auto w-80 h-80">
+          <div className="relative mx-auto w-80 h-65">
             <div className="relative z-10 w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
               <img
                 src="/images/profile.jpg"
@@ -135,35 +135,28 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
             href="https://github.com/SriSrik123"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2, color: "var(--primary)" }}
+            whileHover={{ scale: 1.2, filter: "drop-shadow(0 0 8px rgba(114,114,240,0.8))" }}
             className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
           >
-            <Github className="h-8 w-8" />
+            <Github className="h-14 w-14" />
           </motion.a>
           <motion.a
             href="https://www.linkedin.com/in/srinarayan-srikanth-bb2750259/"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2, color: "var(--ring)" }}
-            className="text-muted-foreground hover:text-ring transition-colors cursor-pointer"
+            whileHover={{ scale: 1.2, filter: "drop-shadow(0 0 8px rgba(114,114,240,0.8))" }}
+            className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
           >
-            <Linkedin className="h-8 w-8" />
+            <Linkedin className="h-14 w-14" />
           </motion.a>
           <motion.a
             href="http://hackerrank.com/profile/hellosri2006"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.2 }}
-            className="inline-flex items-center justify-center transition-colors cursor-pointer"
+            whileHover={{ scale: 1.2, filter: "drop-shadow(0 0 8px rgba(114,114,240,0.8))" }}
+            className="text-muted-foreground hover:text-primary transition-colors cursor-pointer"
           >
-            <img
-              src="/images/hackerrank.png"
-              alt="HackerRank"
-              className="h-8 w-8 object-contain"
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-            />
+            <HackerRankIcon className="h-14 w-14" />
           </motion.a>
         </motion.div>
       </div>
