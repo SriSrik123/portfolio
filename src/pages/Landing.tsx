@@ -119,7 +119,7 @@ export default function Landing() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen bg-background text-foreground dark"
+        className="min-h-screen bg-background text-foreground dark overflow-x-hidden"
       >
         <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
 
