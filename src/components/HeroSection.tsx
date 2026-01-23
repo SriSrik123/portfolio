@@ -43,15 +43,15 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           initial={{ scale: 0, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: false }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0 }}
           className="mb-8 mt-32"
         >
           <div className="relative mx-auto w-80 h-65">
             <div className="relative z-10 w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
               <img
-                src="/images/profile.jpg"
+                src="/images/profile.png"
                 alt="Profile photo"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover translate-y-0 scale-100"
               />
             </div>
           </div>
