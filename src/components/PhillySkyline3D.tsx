@@ -1,6 +1,6 @@
 import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Center, Html } from '@react-three/drei';
-import { Suspense, useState } from 'react';
+import { Suspense, useMemo } from 'react';
 import * as THREE from 'three';
 import { ThreeMFLoader } from 'three/examples/jsm/loaders/3MFLoader.js';
 
@@ -16,46 +16,20 @@ function Loader() {
     );
 }
 
-// Error boundary component
-function ErrorFallback() {
-    return (
-        <Html center>
-            <div className="text-center">
-                <p className="text-sm text-red-500">Failed to load 3D model</p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded text-sm"
-                >
-                    Retry
-                </button>
-            </div>
-        </Html>
-    );
-}
-
-// Model component with error handling
+// Model component
 function PhillyModel() {
-    const [error, setError] = useState(false);
+    const model = useLoader(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
 
-    let model;
-    try {
-        model = useLoader(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
-    } catch (err) {
-        setError(true);
-        console.error('Error loading 3D model:', err);
-        return <ErrorFallback />;
-    }
+    // Use useMemo to clone and prepare the model efficiently
+    const skyline = useMemo(() => {
+        // Get only the first object (the skyline, not the frame)
+        const baseObject = model.children && model.children.length > 0 ? model.children[0] : model;
 
-    if (error) {
-        return <ErrorFallback />;
-    }
+        // Clone to avoid mutating the cached original
+        const clonedObject = baseObject.clone();
 
-    // Get only the first object (the skyline, not the frame)
-    const skyline = model.children && model.children.length > 0 ? model.children[0] : model;
-
-    // Apply dark grey tint while preserving original material properties
-    if (skyline) {
-        skyline.traverse((child: any) => {
+        // Apply dark grey tint while preserving original material properties
+        clonedObject.traverse((child: any) => {
             if (child.isMesh && child.material) {
                 // Clone the original material to preserve all properties
                 const originalMaterial = child.material;
@@ -64,7 +38,9 @@ function PhillyModel() {
                 child.material.color = new THREE.Color('#848990ff');
             }
         });
-    }
+
+        return clonedObject;
+    }, [model]);
 
     return (
         <Center>
@@ -76,6 +52,9 @@ function PhillyModel() {
         </Center>
     );
 }
+
+// Preload the model to ensure it loads immediately
+useLoader.preload(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
 
 // Scene with lights
 function Scene() {
@@ -105,15 +84,13 @@ function Scene() {
 // Main component
 export default function PhillySkyline3D() {
     return (
-        <div className="w-full h-full min-h-[400px] rounded-lg overflow-hidden liquid-glass relative">
+        <div className="w-full h-full rounded-lg overflow-hidden liquid-glass relative">
             <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, alpha: false }}>
                 <PerspectiveCamera makeDefault position={[0, 1, 10]} fov={50} />
                 <Scene />
                 <OrbitControls
-                    enableZoom={true}
+                    enableZoom={false}
                     enablePan={false}
-                    minDistance={6}
-                    maxDistance={25}
                     minPolarAngle={0}
                     maxPolarAngle={Math.PI / 2}
                     autoRotate
