@@ -1,31 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Code, Zap } from "lucide-react";
+import { Download } from "lucide-react";
+import PhillySkyline3D from "./PhillySkyline3D";
 
 export default function AboutSection() {
-  const highlights = [
-    {
-      icon: BookOpen,
-      title: "Education",
-      description: "Computer Science at Drexel University, Class of 2029"
-    },
-    {
-      icon: Award,
-      title: "Scholarship",
-      description: "Proud recipient of the A.J. Drexel Scholarship"
-    },
-    {
-      icon: Code,
-      title: "Experience",
-      description: "Internships at Neural Metrics and Comcast Corporation"
-    },
-    {
-      icon: Zap,
-      title: "Passion",
-      description: "AI/ML, full-stack development, and intelligent applications"
-    }
-  ];
-
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -51,45 +29,38 @@ export default function AboutSection() {
             <Card className="liquid-glass">
               <CardContent className="p-8">
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                  I am a Computer Science student at Drexel University, Philadelphia, Class of 2029. I am also a proud recipient
-                  of the A.J. Drexel Scholarship. My academic and professional journey spans both the U.S. and India, where I've
-                  gained unique perspectives in applying AI and software development to solve real-world challenges.
+                  I am a Computer Science student at Drexel University, Philadelphia, Class of 2029. My academic and
+                  professional journey spans both the U.S. and India, where I've gained unique perspectives in applying
+                  AI and software development to solve real-world challenges.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                   My passions lie in AI/ML, full-stack development, and building intelligent applications that create real
                   impact. From designing AI-powered systems at Neural Metrics to exploring AI strategy at Comcast, I thrive
                   at the intersection of technology and business transformation.
                 </p>
+                <motion.a
+                  href="/Srinarayan Srikanth Resume.pdf"
+                  download="Srinarayan_Srikanth_Resume.pdf"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 neon-glow"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Download className="h-5 w-5" />
+                  Download Resume
+                </motion.a>
               </CardContent>
             </Card>
           </motion.div>
 
-          {/* Highlights Grid */}
+          {/* 3D Philadelphia Skyline */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: false }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+            className="h-[500px]"
           >
-            {highlights.map((highlight, index) => (
-              <motion.div
-                key={highlight.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: false }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Card className="liquid-glass cursor-pointer">
-                  <CardContent className="p-6 text-left">
-                    <highlight.icon className="h-12 w-12 text-primary mb-4 neon-glow" />
-                    <h3 className="text-lg font-semibold mb-2 text-primary">{highlight.title}</h3>
-                    <p className="text-sm text-muted-foreground">{highlight.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+            <PhillySkyline3D />
           </motion.div>
         </div>
       </div>
