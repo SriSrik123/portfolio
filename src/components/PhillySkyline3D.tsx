@@ -1,12 +1,54 @@
 import { Canvas, useLoader } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Center } from '@react-three/drei';
-import { Suspense } from 'react';
+import { OrbitControls, PerspectiveCamera, Center, Html } from '@react-three/drei';
+import { Suspense, useState } from 'react';
 import * as THREE from 'three';
 import { ThreeMFLoader } from 'three/examples/jsm/loaders/3MFLoader.js';
 
-// Model component
+// Loading component with progress
+function Loader() {
+    return (
+        <Html center>
+            <div className="flex flex-col items-center gap-3">
+                <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-sm text-muted-foreground">Loading Philadelphia Skyline...</p>
+            </div>
+        </Html>
+    );
+}
+
+// Error boundary component
+function ErrorFallback() {
+    return (
+        <Html center>
+            <div className="text-center">
+                <p className="text-sm text-red-500">Failed to load 3D model</p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded text-sm"
+                >
+                    Retry
+                </button>
+            </div>
+        </Html>
+    );
+}
+
+// Model component with error handling
 function PhillyModel() {
-    const model = useLoader(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
+    const [error, setError] = useState(false);
+
+    let model;
+    try {
+        model = useLoader(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
+    } catch (err) {
+        setError(true);
+        console.error('Error loading 3D model:', err);
+        return <ErrorFallback />;
+    }
+
+    if (error) {
+        return <ErrorFallback />;
+    }
 
     // Get only the first object (the skyline, not the frame)
     const skyline = model.children && model.children.length > 0 ? model.children[0] : model;
@@ -24,7 +66,6 @@ function PhillyModel() {
         });
     }
 
-
     return (
         <Center>
             <primitive
@@ -36,21 +77,11 @@ function PhillyModel() {
     );
 }
 
-// Loading fallback
-function Loader() {
-    return (
-        <mesh>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#3b82f6" wireframe />
-        </mesh>
-    );
-}
-
 // Scene with lights
 function Scene() {
     return (
         <>
-            {/* Model */}
+            {/* Model with Suspense */}
             <Suspense fallback={<Loader />}>
                 <PhillyModel />
             </Suspense>
@@ -74,8 +105,8 @@ function Scene() {
 // Main component
 export default function PhillySkyline3D() {
     return (
-        <div className="w-full h-full min-h-[400px] rounded-lg overflow-hidden liquid-glass">
-            <Canvas shadows dpr={[1, 2]}>
+        <div className="w-full h-full min-h-[400px] rounded-lg overflow-hidden liquid-glass relative">
+            <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, alpha: false }}>
                 <PerspectiveCamera makeDefault position={[0, 1, 10]} fov={50} />
                 <Scene />
                 <OrbitControls
