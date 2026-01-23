@@ -5,7 +5,7 @@ import PhillySkyline3D from "./PhillySkyline3D";
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[100vw] overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -61,7 +61,7 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
 
-            className="h-[300px] sm:h-[400px] lg:h-[500px] w-full"
+            className="h-[300px] sm:h-[400px] lg:h-[500px] w-full max-w-full overflow-hidden"
           >
             <PhillySkyline3D />
           </motion.div>

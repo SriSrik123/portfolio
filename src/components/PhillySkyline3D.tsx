@@ -84,8 +84,8 @@ function Scene() {
 // Main component
 export default function PhillySkyline3D() {
     return (
-        <div className="w-full h-full rounded-lg overflow-hidden liquid-glass relative">
-            <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, alpha: false }}>
+        <div className="w-full max-w-full h-full rounded-lg overflow-hidden liquid-glass relative">
+            <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, alpha: false }} style={{ touchAction: 'pan-y' }}>
                 <PerspectiveCamera makeDefault position={[0, 1, 10]} fov={50} />
                 <Scene />
                 <OrbitControls
