@@ -57,7 +57,7 @@ export default function SkillsSection() {
     {
       title: "Full Stack Web Development",
       issuer: "Indian Institute of Technology (IIT)",
-      period: "March 2024 - March 2026"
+      period: "March 2024 - March 2025"
     },
     {
       title: "LinkedIn Learning",
