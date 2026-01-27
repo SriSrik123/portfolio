@@ -78,57 +78,44 @@ export default function SkillsSection() {
     { title: "HackerRank", courses: hackerRankSkills }
   ];
 
+  // Flatten skills for scrolling
+  const allSkills = skillCategories.flatMap((cat) =>
+    cat.skills.map((skill) => ({
+      name: skill,
+      icon: cat.icon,
+      color: cat.color,
+    }))
+  );
+
+  // Split skills into 3 rows for variety
+  const row1 = allSkills.slice(0, Math.ceil(allSkills.length / 3));
+  const row2 = allSkills.slice(Math.ceil(allSkills.length / 3), Math.ceil((allSkills.length * 2) / 3));
+  const row3 = allSkills.slice(Math.ceil((allSkills.length * 2) / 3));
+
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="py-20 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="text-center mb-16"
+          className="text-center"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Technical Skills</h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow"></div>
         </motion.div>
+      </div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: false }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <Card className="liquid-glass h-full">
-                <CardHeader>
-                  <CardTitle className={`text-lg flex items-center gap-3 ${category.color}`}>
-                    <category.icon className="h-6 w-6 neon-glow" />
-                    {category.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="secondary"
-                        className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+      {/* Scrolling Skills Rows */}
+      <div className="flex flex-col gap-8 mb-20">
+        <SkillRow skills={row1} direction="left" speed={40} />
+        <SkillRow skills={row2} direction="right" speed={50} />
+        <SkillRow skills={row3} direction="left" speed={45} />
+      </div>
 
-        {/* Certifications */}
+      {/* Certifications */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +133,7 @@ export default function SkillsSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: false }}
               >
-                <Card className="liquid-glass">
+                <Card className="liquid-glass h-full">
                   <CardHeader>
                     <CardTitle className="text-lg text-accent">{cert.title}</CardTitle>
                     {("issuer" in cert && cert.issuer) && (
@@ -182,3 +169,48 @@ export default function SkillsSection() {
     </section>
   );
 }
+
+const SkillRow = ({
+  skills,
+  direction,
+  speed,
+}: {
+  skills: { name: string; icon: any; color: string }[];
+  direction: "left" | "right";
+  speed: number;
+}) => {
+  return (
+    <div className="relative flex overflow-hidden group">
+      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent z-10"></div>
+      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent z-10"></div>
+
+      <motion.div
+        className="flex gap-4 shrink-0 px-2"
+        animate={{
+          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
+        }}
+        transition={{
+          repeat: Infinity,
+          ease: "linear",
+          duration: speed,
+        }}
+      >
+        {/* Duplicate list for seamless loop */}
+        {[...skills, ...skills, ...skills, ...skills].map((skill, i) => (
+          <div
+            key={i}
+            className={`
+              flex items-center gap-2 px-4 py-2 rounded-full 
+              bg-secondary/40 border border-white/5 backdrop-blur-sm
+              hover:bg-primary/20 hover:border-primary/30 transition-colors
+              whitespace-nowrap cursor-default
+            `}
+          >
+            <skill.icon className={`h-4 w-4 ${skill.color}`} />
+            <span className="text-sm font-medium">{skill.name}</span>
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
