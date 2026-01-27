@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ChevronDown, Github, Linkedin } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { HackerRankIcon } from "@/components/icons/HackerRankIcon";
 
 interface HeroSectionProps {
@@ -12,6 +12,8 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onSectionClick }: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [clickCount, setClickCount] = useState(0);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Track scroll relative to this section
   const { scrollYProgress } = useScroll({
@@ -22,12 +24,46 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
   // Prism opacity: fully visible at top, fades out as you scroll down
   const prismOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
+  const handleProfileClick = () => {
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    if (newCount === 5) {
+      setShowVideo(true);
+      setClickCount(0);
+    }
+  };
+
   return (
     <section
       ref={sectionRef}
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
+      {/* Easter Egg Video Overlay */}
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
+            onClick={() => setShowVideo(false)}
+          >
+            <motion.video
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              src="/video/video.mp4"
+              autoPlay
+              playsInline
+              className="max-w-full max-h-[80vh] rounded-xl shadow-2xl border border-primary/20"
+              onEnded={() => setShowVideo(false)}
+              onClick={(e) => e.stopPropagation()} // Allow clicking video pause/play if controls enabled (disabled here) or just prevent closing
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Prism full background with fade-out */}
       <motion.div
         className="absolute inset-0 -z-10"
@@ -47,7 +83,10 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
           className="mb-8 mt-32"
         >
           <div className="relative mx-auto w-80 h-65">
-            <div className="relative z-10 w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl">
+            <div
+              className="relative z-10 w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-xl cursor-pointer hover:scale-105 transition-transform duration-300"
+              onClick={handleProfileClick}
+            >
               <img
                 src="/images/profile.png"
                 alt="Profile photo"
