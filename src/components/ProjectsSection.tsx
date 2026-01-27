@@ -1,18 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github } from "lucide-react";
 import { useState, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-function FallbackImage({ src, alt }: { src: string; alt: string }) {
+function FallbackImage({ src, alt, className }: { src: string; alt: string, className?: string }) {
   const [failed, setFailed] = useState(false);
 
   if (failed) {
     return (
-      <div className="w-full h-full grid place-items-center bg-gradient-to-br from-primary/15 via-ring/15 to-accent/15 text-muted-foreground">
-        <span className="px-3 py-1 text-sm">{alt}</span>
+      <div className={`w-full h-full grid place-items-center bg-gradient-to-br from-primary/15 via-ring/15 to-accent/15 text-muted-foreground ${className}`}>
+        <span className="px-3 py-1 text-sm text-center">{alt}</span>
       </div>
     );
   }
@@ -21,12 +20,106 @@ function FallbackImage({ src, alt }: { src: string; alt: string }) {
     <img
       src={src}
       alt={alt}
-      className="w-full h-full object-contain p-3 bg-muted/20"
+      className={`w-full h-full object-contain p-4 bg-muted/20 ${className}`}
       loading="lazy"
       decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
     />
+  );
+}
+
+function ProjectCard({ project, index, setRef, variants }: { project: any; index: number; setRef: (el: HTMLDivElement | null) => void; variants: any }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <motion.div
+      ref={setRef}
+      variants={variants}
+      className={`w-[85vw] sm:w-[45vw] lg:w-[25vw] h-[500px] snap-start perspective-1000 group ${isFlipped ? '' : 'hover:z-50'}`}
+    >
+      <motion.div
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        initial={{ rotateY: 0 }}
+        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+        className="w-full h-full transform-style-3d cursor-pointer relative"
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        {/* Front Face */}
+        <div
+          className="absolute inset-0 backface-hidden rounded-[28px] overflow-hidden liquid-glass border border-primary/20 shadow-xl"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}
+        >
+          <div className="w-full h-full relative">
+            <FallbackImage
+              src={project.image}
+              alt={project.title}
+              className={`transition-transform duration-500 ${!isFlipped ? 'group-hover:scale-105' : ''}`}
+            />
+            {/* Gradient Overlay for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+
+            <div className={`absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 ${!isFlipped ? 'transform translate-y-2 group-hover:translate-y-0' : ''}`}>
+              <h3 className="text-3xl font-bold text-white mb-1 drop-shadow-md" style={{ fontFamily: 'Baumans, sans-serif' }}>{project.title}</h3>
+              <p className="text-white/80 text-sm font-medium flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Tap to view details
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Back Face */}
+        <div
+          className="absolute inset-0 backface-hidden rotate-y-180 rounded-[28px] overflow-hidden liquid-glass border border-primary/20 shadow-xl p-6 bg-card/95 backdrop-blur-xl"
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <div className="h-full flex flex-col">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-3xl font-bold text-primary" style={{ fontFamily: 'Baumans, sans-serif' }}>{project.title}</h3>
+              <div className="w-8 h-8 rounded-full bg-primary/10 grid place-items-center text-primary text-xs font-bold">
+                {index + 1}
+              </div>
+            </div>
+
+            <ScrollArea className="flex-grow pr-4 -mr-4 mb-4">
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                {project.description}
+              </p>
+
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground/80">Technologies</h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech: string) => (
+                    <Badge key={tech} variant="secondary" className="text-xs px-2.5 py-1 bg-primary/10 text-primary hover:bg-primary/20 border-primary/10 transition-colors">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </ScrollArea>
+
+            <div className="mt-auto pt-4 border-t border-border/50">
+              <Button
+                variant="default"
+                className="w-full gap-2 font-bold shadow-lg hover:shadow-primary/25 transition-all"
+                asChild
+                onClick={(e) => e.stopPropagation()} // Prevent flip when clicking button
+              >
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="h-4 w-4" />
+                  View Source Code
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -114,9 +207,10 @@ export default function ProjectsSection() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.08, delayChildren: 0.08 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
     },
   };
+
   const item = {
     hidden: { opacity: 0, y: 24, scale: 0.98 },
     show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55 } },
@@ -130,7 +224,7 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -144,7 +238,6 @@ export default function ProjectsSection() {
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto neon-glow mb-8"></div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-
           </p>
         </motion.div>
 
@@ -153,13 +246,13 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: false }}
-          className="flex flex-wrap justify-center gap-4 mb-8"
+          className="flex flex-wrap justify-center gap-4 mb-12"
         >
           {projects.map((p, idx) => (
             <button
               key={p.title}
               style={{ fontFamily: 'Baumans, sans-serif' }}
-              className="text-base md:text-lg text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer"
+              className="text-base md:text-lg text-muted-foreground hover:text-primary transition-all duration-300 cursor-pointer hover:scale-110 px-3 py-1"
               onClick={() => scrollToProject(idx)}
             >
               {p.title}
@@ -172,67 +265,25 @@ export default function ProjectsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, margin: "0px 0px -100px 0px" }}
+          className="relative"
         >
-          <ScrollArea className="w-full">
+          <ScrollArea className="w-full pb-8">
             <div
               ref={scrollerRef}
-              className="w-max flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4"
+              className="w-max flex gap-8 px-8 sm:px-12 md:px-0 mx-auto"
             >
               {projects.map((project, index) => (
-                <motion.div
+                <ProjectCard
                   key={project.title}
-                  ref={(el) => { itemRefs.current[index] = el; }}
+                  project={project}
+                  index={index}
+                  setRef={(el) => { itemRefs.current[index] = el; }}
                   variants={item}
-                  whileHover={{ y: -6, rotate: index % 2 === 0 ? -0.4 : 0.4 }}
-                  transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                  className="w-[60vw] sm:w-[40vw] lg:w-[22vw] snap-start"
-                >
-                  <Card className="liquid-glass h-full">
-                    <div className="overflow-hidden rounded-t-lg h-36 sm:h-44 lg:h-52">
-                      <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.25 }} className="w-full h-full">
-                        <FallbackImage src={project.image} alt={project.title} />
-                      </motion.div>
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="text-2xl md:text-3xl mb-2 text-primary">
-                        {project.title}
-                      </CardTitle>
-                      <p className="text-muted-foreground">
-                        {project.description}
-                      </p>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex pt-4">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground cursor-pointer"
-                          asChild
-                        >
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Github className="h-4 w-4 mr-2" />
-                            Code
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                />
               ))}
             </div>
-            <ScrollBar orientation="horizontal" />
+            <ScrollBar orientation="horizontal" className="hidden" />
+            {/* Hidden scrollbar for cleaner look, swipe driven */}
           </ScrollArea>
         </motion.div>
       </div>
