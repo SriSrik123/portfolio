@@ -29,7 +29,7 @@ function FallbackImage({ src, alt, className }: { src: string; alt: string, clas
   );
 }
 
-function ProjectCard({ project, index, setRef, variants }: { project: any; index: number; setRef: (el: HTMLDivElement | null) => void; variants: any }) {
+function ProjectCard({ project, index, setRef, variants, onPandasClick }: { project: any; index: number; setRef: (el: HTMLDivElement | null) => void; variants: any; onPandasClick?: () => void }) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -84,7 +84,23 @@ function ProjectCard({ project, index, setRef, variants }: { project: any; index
 
             <ScrollArea className="flex-grow pr-4 -mr-4 mb-4">
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                {project.description}
+                {project.description.split(/(Pandas|pandas)/).map((part: string, i: number) => {
+                  if (part.toLowerCase() === 'pandas' && onPandasClick) {
+                    return (
+                      <span
+                        key={i}
+                        className="cursor-pointer hover:text-primary transition-colors underline decoration-dotted"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onPandasClick();
+                        }}
+                      >
+                        {part}
+                      </span>
+                    );
+                  }
+                  return part;
+                })}
               </p>
 
               <div className="space-y-4">
@@ -126,6 +142,8 @@ function ProjectCard({ project, index, setRef, variants }: { project: any; index
 export default function ProjectsSection() {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [pandasClickCount, setPandasClickCount] = useState(0);
+  const [showPandasVideo, setShowPandasVideo] = useState(false);
 
   const projects = [
     {
@@ -194,7 +212,7 @@ export default function ProjectsSection() {
     {
       title: "ShopPulse",
       description:
-        "Developed an AI-driven product recommendation system leveraging a dataset of 20,000+ products to offer personalized shopping suggestions.",
+        "Developed an AI-driven product recommendation system leveraging a dataset of 20,000+ products processed with Pandas to offer personalized shopping suggestions.",
       image: "/images/shoppulse.png",
       technologies: ["Python", "Pandas", "Flask"],
       category: "ai",
@@ -223,8 +241,42 @@ export default function ProjectsSection() {
     }
   };
 
+  const handlePandasClick = () => {
+    const newCount = pandasClickCount + 1;
+    setPandasClickCount(newCount);
+    if (newCount === 5) {
+      setShowPandasVideo(true);
+      setPandasClickCount(0);
+    }
+  };
+
   return (
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Easter Egg Video Overlay */}
+      <AnimatePresence>
+        {showPandasVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
+            onClick={() => setShowPandasVideo(false)}
+          >
+            <motion.video
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.8 }}
+              src="/video/soham.mp4"
+              autoPlay
+              playsInline
+              className="max-w-full max-h-[80vh] rounded-xl shadow-2xl border border-primary/20"
+              onEnded={() => setShowPandasVideo(false)}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -279,6 +331,7 @@ export default function ProjectsSection() {
                   index={index}
                   setRef={(el) => { itemRefs.current[index] = el; }}
                   variants={item}
+                  onPandasClick={project.description.toLowerCase().includes('pandas') ? handlePandasClick : undefined}
                 />
               ))}
             </div>
