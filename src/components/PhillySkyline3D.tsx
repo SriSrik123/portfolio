@@ -53,8 +53,8 @@ function PhillyModel() {
     );
 }
 
-// Preload the model to ensure it loads immediately
-useLoader.preload(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
+// Preload removed to improve initial load performance
+// useLoader.preload(ThreeMFLoader, '/model/Philadelphia+125mm+Frame.3mf');
 
 // Scene with lights
 function Scene() {

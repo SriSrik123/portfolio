@@ -1,9 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useState, lazy, Suspense } from "react";
 import { Download } from "lucide-react";
-import PhillySkyline3D from "./PhillySkyline3D";
+
+const PhillySkyline3D = lazy(() => import("./PhillySkyline3D"));
 
 export default function AboutSection() {
+  const [shouldLoadModel, setShouldLoadModel] = useState(false);
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[100vw] overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -62,8 +65,11 @@ export default function AboutSection() {
             viewport={{ once: true }}
 
             className="h-[300px] sm:h-[400px] lg:h-[500px] w-full max-w-full overflow-hidden"
+            onViewportEnter={() => setShouldLoadModel(true)}
           >
-            <PhillySkyline3D />
+            <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+              {shouldLoadModel && <PhillySkyline3D />}
+            </Suspense>
           </motion.div>
         </div>
       </div>

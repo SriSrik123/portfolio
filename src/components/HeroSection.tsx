@@ -77,9 +77,8 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
         {/* Profile Image */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8, delay: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0 }}
           className="mb-8 mt-32"
         >
           <div className="relative mx-auto w-80 h-65">
@@ -91,6 +90,8 @@ export default function HeroSection({ onSectionClick }: HeroSectionProps) {
                 src="/images/profile.png"
                 alt="Profile photo"
                 className="w-full h-full object-cover translate-y-0 scale-100"
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </div>

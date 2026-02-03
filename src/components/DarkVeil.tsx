@@ -92,65 +92,80 @@ export default function DarkVeil({
     resolutionScale?: number;
 }) {
     const ref = useRef<HTMLCanvasElement>(null);
+    const cleanupRef = useRef<(() => void) | null>(null);
+
     useEffect(() => {
-        const canvas = ref.current;
-        if (!canvas) return;
-        const parent = canvas.parentElement;
-        if (!parent) return;
+        const timeoutId = setTimeout(() => {
+            const canvas = ref.current;
+            if (!canvas) return;
+            const parent = canvas.parentElement;
+            if (!parent) return;
 
-        const renderer = new Renderer({
-            dpr: Math.min(window.devicePixelRatio, 2),
-            canvas
-        });
+            const renderer = new Renderer({
+                dpr: Math.min(window.devicePixelRatio, 2),
+                canvas
+            });
 
-        const gl = renderer.gl;
-        const geometry = new Triangle(gl);
+            const gl = renderer.gl;
+            const geometry = new Triangle(gl);
 
-        const program = new Program(gl, {
-            vertex,
-            fragment,
-            uniforms: {
-                uTime: { value: 0 },
-                uResolution: { value: new Vec2() },
-                uHueShift: { value: hueShift },
-                uNoise: { value: noiseIntensity },
-                uScan: { value: scanlineIntensity },
-                uScanFreq: { value: scanlineFrequency },
-                uWarp: { value: warpAmount }
-            }
-        });
+            const program = new Program(gl, {
+                vertex,
+                fragment,
+                uniforms: {
+                    uTime: { value: 0 },
+                    uResolution: { value: new Vec2() },
+                    uHueShift: { value: hueShift },
+                    uNoise: { value: noiseIntensity },
+                    uScan: { value: scanlineIntensity },
+                    uScanFreq: { value: scanlineFrequency },
+                    uWarp: { value: warpAmount }
+                }
+            });
 
-        const mesh = new Mesh(gl, { geometry, program });
+            const mesh = new Mesh(gl, { geometry, program });
 
-        const resize = () => {
-            const w = parent.clientWidth,
-                h = parent.clientHeight;
-            renderer.setSize(w * resolutionScale, h * resolutionScale);
-            program.uniforms.uResolution.value.set(w, h);
-        };
+            const resize = () => {
+                const w = parent.clientWidth,
+                    h = parent.clientHeight;
+                renderer.setSize(w * resolutionScale, h * resolutionScale);
+                program.uniforms.uResolution.value.set(w, h);
+            };
 
-        window.addEventListener('resize', resize);
-        resize();
+            window.addEventListener('resize', resize);
+            resize();
 
-        const start = performance.now();
-        let frame = 0;
+            const start = performance.now();
+            let frame = 0;
 
-        const loop = () => {
-            program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
-            program.uniforms.uHueShift.value = hueShift;
-            program.uniforms.uNoise.value = noiseIntensity;
-            program.uniforms.uScan.value = scanlineIntensity;
-            program.uniforms.uScanFreq.value = scanlineFrequency;
-            program.uniforms.uWarp.value = warpAmount;
-            renderer.render({ scene: mesh });
-            frame = requestAnimationFrame(loop);
-        };
+            const loop = () => {
+                program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
+                program.uniforms.uHueShift.value = hueShift;
+                program.uniforms.uNoise.value = noiseIntensity;
+                program.uniforms.uScan.value = scanlineIntensity;
+                program.uniforms.uScanFreq.value = scanlineFrequency;
+                program.uniforms.uWarp.value = warpAmount;
+                renderer.render({ scene: mesh });
+                frame = requestAnimationFrame(loop);
+            };
 
-        loop();
+            loop();
+
+            // Store cleanup function in the ref or closure scope?
+            // useEffect cleanup needs to access these.
+            // Since I'm wrapping everything, I need to make sure cleanup works.
+            // Attaching cleanup to the timeout logic isn't straightforward because useEffect returns the cleanup synchronously.
+
+            // Clean up function that will be called by useEffect's return
+            cleanupRef.current = () => {
+                cancelAnimationFrame(frame);
+                window.removeEventListener('resize', resize);
+            };
+        }, 100);
 
         return () => {
-            cancelAnimationFrame(frame);
-            window.removeEventListener('resize', resize);
+            clearTimeout(timeoutId);
+            if (cleanupRef.current) cleanupRef.current();
         };
     }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale]);
     return <canvas ref={ref} className="darkveil-canvas" />;
