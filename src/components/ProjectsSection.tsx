@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import { useState, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -74,15 +74,15 @@ function ProjectCard({ project, index, setRef, variants, onPandasClick }: { proj
           className="absolute inset-0 backface-hidden rotate-y-180 rounded-[28px] overflow-hidden liquid-glass border border-primary/20 shadow-xl p-6 bg-card/95 backdrop-blur-xl"
           style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
-          <div className="h-full flex flex-col">
-            <div className="flex justify-between items-start mb-4">
+          <div className="h-full flex flex-col overflow-hidden">
+            <div className="flex justify-between items-start mb-4 shrink-0">
               <h3 className="text-3xl font-bold text-primary" style={{ fontFamily: 'Baumans, sans-serif' }}>{project.title}</h3>
               <div className="w-8 h-8 rounded-full bg-primary/10 grid place-items-center text-primary text-xs font-bold">
                 {index + 1}
               </div>
             </div>
 
-            <ScrollArea className="flex-grow pr-4 -mr-4 mb-4">
+            <ScrollArea className="flex-grow min-h-0 pr-4 -mr-4 mb-2">
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 {project.description.split(/(Pandas|pandas)/).map((part: string, i: number) => {
                   if (part.toLowerCase() === 'pandas' && onPandasClick) {
@@ -115,12 +115,31 @@ function ProjectCard({ project, index, setRef, variants, onPandasClick }: { proj
               </div>
             </ScrollArea>
 
-            <div className="mt-auto pt-4 border-t border-border/50">
+            <div className="mt-auto pt-3 border-t border-border/50 flex flex-col gap-1.5 shrink-0">
+              {project.live && project.live !== "#" && (
+                <Button
+                  size="sm"
+                  variant="default"
+                  className="w-full gap-2 font-bold shadow-lg hover:shadow-primary/25 transition-all"
+                  asChild
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Live Demo
+                  </a>
+                </Button>
+              )}
               <Button
-                variant="default"
-                className="w-full gap-2 font-bold shadow-lg hover:shadow-primary/25 transition-all"
+                size="sm"
+                variant="outline"
+                className="w-full gap-2 font-bold transition-all"
                 asChild
-                onClick={(e) => e.stopPropagation()} // Prevent flip when clicking button
+                onClick={(e) => e.stopPropagation()}
               >
                 <a
                   href={project.github}
@@ -184,7 +203,7 @@ export default function ProjectsSection() {
       ],
       category: "fullstack",
       github: "https://github.com/SriSrik123/Syllabuddy",
-      live: "https://syllabuddy-three.vercel.app",
+      live: "https://syllabuddyai.vercel.app",
     },
     {
       title: "EcoSnap",
