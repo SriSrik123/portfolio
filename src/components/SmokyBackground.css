@@ -1,8 +1,9 @@
 .smoky-background {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100vh;
     height: 100%;
     z-index: 0;
     overflow: hidden;
