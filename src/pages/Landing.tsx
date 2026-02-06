@@ -97,29 +97,27 @@ export default function Landing() {
 
   return (
     <>
-      {/* DarkVeil animated background - always visible */}
+      {/* DarkVeil animated background - always visible, full viewport */}
       <div
-        className="fixed inset-0 pointer-events-none"
+        className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
         style={{ zIndex: 0, mixBlendMode: 'screen' }}
       >
-        <div className="w-full h-full opacity-100">
-          <DarkVeil
-            hueShift={20}
-            noiseIntensity={0.05}
-            scanlineIntensity={0.1}
-            speed={0.4}
-            scanlineFrequency={0.3}
-            warpAmount={0.4}
-            resolutionScale={1}
-          />
-        </div>
+        <DarkVeil
+          hueShift={20}
+          noiseIntensity={0.05}
+          scanlineIntensity={0.1}
+          speed={0.4}
+          scanlineFrequency={0.3}
+          warpAmount={0.4}
+          resolutionScale={1}
+        />
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen bg-background text-foreground dark overflow-x-hidden"
+        className="min-h-screen w-full max-w-full bg-background text-foreground dark overflow-x-hidden"
       >
         <Navigation activeSection={activeSection} onSectionClick={scrollToSection} />
 

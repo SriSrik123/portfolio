@@ -167,6 +167,26 @@ export default function ProjectsSection() {
       live: "#",
     },
     {
+      title: "Syllabuddy",
+      description:
+        "Collaborative web app that helps students manage their academic life. Upload syllabi, let AI extract dates and answer questions via RAG, track assignments with friends, and export everything to Google Calendar.",
+      image: "/images/Syllabuddy.png",
+      technologies: [
+        "React 18",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "Node.js",
+        "Express 5",
+        "MongoDB",
+        "Azure AI (GPT-4o)",
+        "Vercel",
+      ],
+      category: "fullstack",
+      github: "https://github.com/SriSrik123/Syllabuddy",
+      live: "https://syllabuddy-three.vercel.app",
+    },
+    {
       title: "EcoSnap",
       description:
         "AI-powered sustainability social app that gamifies environmental action through pollution reporting, plant identification, and community-driven challenges. Transforms everyday observations into crowdsourced, research-ready environmental data.",

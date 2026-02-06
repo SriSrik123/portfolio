@@ -126,8 +126,8 @@ export default function DarkVeil({
             const mesh = new Mesh(gl, { geometry, program });
 
             const resize = () => {
-                const w = parent.clientWidth,
-                    h = parent.clientHeight;
+                const w = window.innerWidth;
+                const h = window.innerHeight;
                 renderer.setSize(w * resolutionScale, h * resolutionScale);
                 program.uniforms.uResolution.value.set(w, h);
             };

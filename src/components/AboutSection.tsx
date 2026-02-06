@@ -8,7 +8,7 @@ const PhillySkyline3D = lazy(() => import("./PhillySkyline3D"));
 export default function AboutSection() {
   const [shouldLoadModel, setShouldLoadModel] = useState(false);
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-[100vw] overflow-hidden">
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-full overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

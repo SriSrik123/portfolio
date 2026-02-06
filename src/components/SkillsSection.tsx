@@ -21,7 +21,7 @@ export default function SkillsSection() {
       title: "Backend/Database",
       icon: Database,
       color: "text-ring",
-      skills: ["Flask", "FastAPI", "Supabase", "Firebase", "REST API"]
+      skills: ["Node.js", "Express", "Flask", "FastAPI", "MongoDB", "Supabase", "Firebase", "REST API"]
     },
     {
       title: "Cloud Platforms",
@@ -33,7 +33,7 @@ export default function SkillsSection() {
       title: "Development Tools",
       icon: Wrench,
       color: "text-chart-5",
-      skills: ["VS Code", "Jenkins", "Docker", "PostCSS", "Date-fns", "Capacitor"]
+      skills: ["VS Code", "Vite", "Jenkins", "Docker", "PostCSS", "Date-fns", "Capacitor"]
     },
     {
       title: "Version Control",
