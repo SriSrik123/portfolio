@@ -108,6 +108,25 @@ type ErrorBoundaryState = {
   error: GenericError | null;
 };
 
+
+const shouldIgnoreError = (error: any) => {
+  if (!error) return false;
+
+  const errorString = error.toString();
+  const stack = error.stack || "";
+  const message = error.message || "";
+
+  return (
+    errorString.includes("webkit-masked-url") ||
+    stack.includes("webkit-masked-url") ||
+    message.includes("webkit-masked-url") ||
+    errorString.includes("chrome-extension://") ||
+    stack.includes("chrome-extension://") ||
+    message.includes("chrome-extension://") ||
+    message === "Script error."
+  );
+};
+
 class ErrorBoundary extends React.Component<
   {
     children: React.ReactNode;
@@ -125,6 +144,10 @@ class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
+    if (shouldIgnoreError(error)) {
+      return;
+    }
+
     // logErrorToMyService(
     //   error,
     //   // Example "componentStack":
@@ -158,7 +181,7 @@ class ErrorBoundary extends React.Component<
             error: "An error occurred",
             stack: "",
           }}
-          setError={() => {}}
+          setError={() => { }}
         />
       );
     }
@@ -178,6 +201,16 @@ export function InstrumentationProvider({
     const handleError = async (event: ErrorEvent) => {
       try {
         console.log(event);
+        // Ignore errors from browser extensions or internal browser scripts
+        if (
+          shouldIgnoreError(event.error) ||
+          shouldIgnoreError(event) ||
+          event.filename?.includes("webkit-masked-url") ||
+          event.filename?.includes("chrome-extension://")
+        ) {
+          return;
+        }
+
         event.preventDefault();
         setError({
           error: event.message,
@@ -204,6 +237,10 @@ export function InstrumentationProvider({
     const handleRejection = async (event: PromiseRejectionEvent) => {
       try {
         console.error(event);
+
+        if (shouldIgnoreError(event.reason)) {
+          return;
+        }
 
         if (import.meta.env.VITE_VLY_APP_ID) {
           await reportErrorToVly({
