@@ -1,11 +1,51 @@
-import { useRef } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Building, Calendar, MapPin, Trophy } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { Building, Calendar, MapPin, Trophy, X } from "lucide-react";
 
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [showVideo, setShowVideo] = useState(false);
+
+  const handleCloseVideo = useCallback(() => {
+    setShowVideo(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleCloseVideo();
+    };
+    if (showVideo) window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [showVideo, handleCloseVideo]);
+
+  function renderDescription(text: string, isLifetime: boolean) {
+    if (!isLifetime) return <span>{text}</span>;
+    const parts = text.split(/(children)/gi);
+    return (
+      <span>
+        {parts.map((part, i) =>
+          part.toLowerCase() === "children" ? (
+            <span
+              key={i}
+              onDoubleClick={() => setShowVideo(true)}
+              className="cursor-pointer hover:text-primary transition-colors"
+            >
+              {part}
+            </span>
+          ) : (
+            <span key={i}>{part}</span>
+          )
+        )}
+      </span>
+    );
+  }
 
   // Track scroll progress through the experience section
   const { scrollYProgress } = useScroll({
@@ -24,10 +64,10 @@ export default function ExperienceSection() {
       location: "Philadelphia, PA",
       period: "Sept 2025 - Present",
       description: [
-        "Collaborate with senior executives and business units to identify high-impact AI use cases and drive enterprise-wide adoption.",
-        "Research and evaluate emerging AI tools, startups, and partnerships to strengthen Comcast’s internal AI capabilities and strategic position.",
-        "Develop, prototype, and demo AI-powered applications and tools for executive leadership, supporting deployment across multiple departments.",
-        "Support go-to-market strategies, partnership evaluations, and implementation of new AI technologies within Comcast’s ecosystem."
+        "Engineered a multi-agent AI simulation platform to accelerate strategic decision-making, presenting capabilities directly to C-suite executives to drive enterprise-wide innovation and explore new ideas.",
+        "Collaborated with diverse business units to integrate the simulation tool, tailoring high-impact AI use cases to streamline departmental preparation and optimize operational workflows.",
+        "Spearheaded research into agentic commerce and emerging enterprise AI trends, representing the AI Strategy Development and Implementation team at industry conferences to benchmark external innovations.",
+        "Evaluated AI startups and partnerships to support go-to-market strategies, prototyping and demoing new technologies for potential deployment within the company’s broader ecosystem."
       ],
       current: true
     },
@@ -199,7 +239,7 @@ export default function ExperienceSection() {
                         {exp.description.map((item, i) => (
                           <li key={i} className="flex items-start gap-3 text-foreground/90 leading-relaxed">
                             <div className="w-2 h-2 bg-primary rounded-full mt-2.5 flex-shrink-0" />
-                            <span>{item}</span>
+                            {renderDescription(item, exp.company === "Lifetime Health & Fitness Center")}
                           </li>
                         ))}
                       </ul>
@@ -241,6 +281,41 @@ export default function ExperienceSection() {
           ))}
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            onClick={handleCloseVideo}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-[90vw] max-w-4xl rounded-2xl overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={handleCloseVideo}
+                className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/60 hover:bg-black/80 text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+              <video
+                ref={videoRef}
+                src="/video/dave.mp4"
+                autoPlay
+                controls
+                className="w-full rounded-2xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
