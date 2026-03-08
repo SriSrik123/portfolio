@@ -1,9 +1,58 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
-import { Code, Database, Cloud, Wrench, GitBranch, Award } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Code, Database, Cloud, Wrench, GitBranch, Award, ChevronLeft, ChevronRight } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+
+const certificationRows = [
+  {
+    label: "Microsoft & IIT Roorkee",
+    type: "static" as const,
+    images: [
+      "/images/Certs/1760805811843.jpeg",
+      "/images/Certs/1744986433612.jpeg",
+    ],
+  },
+  {
+    label: "LinkedIn Learning",
+    type: "scroll" as const,
+    direction: "left" as const,
+    images: [
+      "/images/Certs/1687451447924.jpeg",
+      "/images/Certs/1734406967569.jpeg",
+      "/images/Certs/1734554007734.jpeg",
+      "/images/Certs/1734643513826.jpeg",
+      "/images/Certs/1735851836196.jpeg",
+      "/images/Certs/1735938307019.jpeg",
+    ],
+  },
+  {
+    label: "HackerRank",
+    type: "scroll" as const,
+    direction: "right" as const,
+    images: [
+      "/images/Certs/hackerrank_java.png",
+      "/images/Certs/hackerrank_python.png",
+      "/images/Certs/hackerrank_react.png",
+      "/images/Certs/hackerrank_css.png",
+      "/images/Certs/hackerrank_frontend_react.png",
+      "/images/Certs/hackerrank_software_engineer.png",
+      "/images/Certs/hackerrank_problem_solving.png",
+    ],
+  },
+  {
+    label: "DeepLearning.AI",
+    type: "static" as const,
+    images: [
+      "/images/Certs/1724089257819.jpeg",
+    ],
+  },
+];
+
+const allCertImages = certificationRows.flatMap((row) => row.images);
 
 export default function SkillsSection() {
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
   const skillCategories = [
     {
       title: "Languages",
@@ -49,35 +98,6 @@ export default function SkillsSection() {
     }
   ];
 
-  const certifications = [
-    {
-      title: "Microsoft",
-      courses: ["Azure Fundamentals"]
-    },
-    {
-      title: "Full Stack Web Development",
-      issuer: "Indian Institute of Technology (IIT)",
-      period: "March 2024 - March 2025"
-    },
-    {
-      title: "LinkedIn Learning",
-      courses: ["Prompt Engineering", "Learning JIRA", "Software Development", "Foundations in AI"]
-    },
-    {
-      title: "DeepLearning.AI",
-      course: "AI with Python"
-    }
-  ];
-
-  const hackerRankSkills = [
-    "Java", "Python", "React.js", "CSS", "Frontend Developer", "Software Engineer", "Problem Solving"
-  ];
-
-  const combinedCertifications = [
-    ...certifications,
-    { title: "HackerRank", courses: hackerRankSkills }
-  ];
-
   // Flatten skills for scrolling
   const allSkills = skillCategories.flatMap((cat) =>
     cat.skills.map((skill) => ({
@@ -121,54 +141,199 @@ export default function SkillsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: false }}
-          className="mb-16"
         >
-          <h3 className="text-3xl md:text-4xl font-bold mb-8 text-center">Certifications</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {combinedCertifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: false }}
-              >
-                <Card className="liquid-glass h-full">
-                  <CardHeader>
-                    <CardTitle className="text-lg text-accent">{cert.title}</CardTitle>
-                    {("issuer" in cert && cert.issuer) && (
-                      <p className="text-sm text-muted-foreground">{(cert as any).issuer}</p>
-                    )}
-                    {("period" in cert && cert.period) && (
-                      <p className="text-xs text-muted-foreground">{(cert as any).period}</p>
-                    )}
-                  </CardHeader>
-                  {("courses" in cert && (cert as any).courses) && (
-                    <CardContent>
-                      <ul className="space-y-1">
-                        {(cert as any).courses.map((course: string, i: number) => (
-                          <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
-                            <div className="w-1 h-1 bg-accent rounded-full"></div>
-                            {course}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  )}
-                  {("course" in cert && (cert as any).course) && (
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{(cert as any).course}</p>
-                    </CardContent>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+          <h3 className="text-3xl md:text-4xl font-bold mb-2 text-center">Certifications</h3>
+          <p className="text-muted-foreground text-center mb-10 text-sm">Click any certificate to view full size</p>
         </motion.div>
+
+        {certificationRows.map((row, rowIndex) => {
+          const globalOffset = certificationRows
+            .slice(0, rowIndex)
+            .reduce((sum, r) => sum + r.images.length, 0);
+
+          return (
+            <motion.div
+              key={rowIndex}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: rowIndex * 0.1 }}
+              viewport={{ once: false }}
+              className="mb-12"
+            >
+              <h4 className="text-lg font-semibold text-accent mb-5 text-center">{row.label}</h4>
+
+              {row.type === "scroll" ? (
+                <ScrollingCertRow
+                  images={row.images}
+                  direction={row.direction}
+                  speed={30}
+                  globalOffset={globalOffset}
+                  onSelect={setSelectedImageIndex}
+                />
+              ) : (
+                <div className="flex flex-wrap justify-center gap-5">
+                  {row.images.map((img, imgIndex) => (
+                    <motion.div
+                      key={imgIndex}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: imgIndex * 0.08 }}
+                      viewport={{ once: false }}
+                      whileHover={{ scale: 1.04, y: -6 }}
+                      className="cursor-pointer group/card"
+                      onClick={() => setSelectedImageIndex(globalOffset + imgIndex)}
+                    >
+                      <div className="w-72 h-48 sm:w-80 sm:h-52 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-primary/5 relative">
+                        <img
+                          src={img}
+                          alt={`${row.label} certificate ${imgIndex + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
+                          loading="lazy"
+                          draggable={false}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                          <span className="text-white text-xs font-medium px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+                            View Certificate
+                          </span>
+                          <Award className="h-4 w-4 text-white/80" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
+
+      {/* Lightbox Dialog */}
+      <Dialog
+        open={selectedImageIndex !== null}
+        onOpenChange={(open) => { if (!open) setSelectedImageIndex(null); }}
+      >
+        <DialogContent className="max-w-5xl w-[95vw] bg-background/95 backdrop-blur-xl border-white/10 p-3 sm:p-4">
+          <DialogTitle className="sr-only">Certificate Preview</DialogTitle>
+          {selectedImageIndex !== null && (
+            <div className="relative select-none">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedImageIndex}
+                  src={allCertImages[selectedImageIndex]}
+                  alt={`Certificate ${selectedImageIndex + 1}`}
+                  className="w-full rounded-lg"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  draggable={false}
+                />
+              </AnimatePresence>
+
+              <button
+                onClick={() =>
+                  setSelectedImageIndex(
+                    (selectedImageIndex - 1 + allCertImages.length) % allCertImages.length
+                  )
+                }
+                className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-white/10 hover:bg-primary/20 transition-colors"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() =>
+                  setSelectedImageIndex(
+                    (selectedImageIndex + 1) % allCertImages.length
+                  )
+                }
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-white/10 hover:bg-primary/20 transition-colors"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                {allCertImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImageIndex(i)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      i === selectedImageIndex
+                        ? "bg-primary w-6"
+                        : "bg-white/30 hover:bg-white/60"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
+
+const ScrollingCertRow = ({
+  images,
+  direction,
+  speed,
+  globalOffset,
+  onSelect,
+}: {
+  images: string[];
+  direction: "left" | "right";
+  speed: number;
+  globalOffset: number;
+  onSelect: (index: number) => void;
+}) => {
+  const duplicated = [...images, ...images, ...images, ...images];
+
+  return (
+    <div className="relative flex overflow-hidden group">
+      <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+
+      <motion.div
+        className="flex gap-5 shrink-0 px-2"
+        animate={{
+          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
+        }}
+        transition={{
+          repeat: Infinity,
+          ease: "linear",
+          duration: speed,
+        }}
+      >
+        {duplicated.map((img, i) => (
+          <motion.div
+            key={i}
+            className="shrink-0 cursor-pointer group/card"
+            whileHover={{ scale: 1.05, y: -6 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            onClick={() => onSelect(globalOffset + (i % images.length))}
+          >
+            <div className="w-72 h-48 sm:w-80 sm:h-52 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-primary/5 relative">
+              <img
+                src={img}
+                alt={`Certificate ${(i % images.length) + 1}`}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
+                loading="lazy"
+                draggable={false}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                <span className="text-white text-xs font-medium px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+                  View Certificate
+                </span>
+                <Award className="h-4 w-4 text-white/80" />
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 const SkillRow = ({
   skills,
